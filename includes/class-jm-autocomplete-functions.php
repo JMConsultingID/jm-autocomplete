@@ -372,6 +372,6 @@ function enqueue_autocomplete_address_plugin_assets() {
         wp_enqueue_script('jquery');
         wp_enqueue_script('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js', array(), null, true);
         wp_enqueue_script('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js', array('mapbox-gl'), null, true);
-        wp_enqueue_script('autocomplete-address-plugin-script', plugin_dir_url(__FILE__) . '/../public/js/jm-autocomplete-main.js', array('jquery', 'mapbox-gl', 'mapbox-gl-geocoder'), null, true);
+        wp_enqueue_script('autocomplete-address-plugin-script', plugin_dir_url(__FILE__) . '../public/js/jm-autocomplete-main.js', array('jquery', 'mapbox-gl', 'mapbox-gl-geocoder'), null, true);
     }
 add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets');
