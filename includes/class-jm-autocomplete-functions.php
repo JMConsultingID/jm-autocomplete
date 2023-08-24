@@ -304,3 +304,53 @@ function add_hidden_fields_to_wpforms($form_data) {
 }
  
 add_action('wpforms_frontend_output', 'add_hidden_fields_to_wpforms', 10, 1);
+
+function add_autocomplete_results_to_wpforms($form_data) {
+ 
+    // Check if the form ID is 461
+    if (absint($form_data['id']) !== 461) {
+        return;
+    }
+ 
+    // Add the autocomplete results div after the Pickup input
+    ?>
+     <style>
+    .mapboxgl-ctrl-geocoder {
+        width: 100%;
+        border-radius: 4px;
+    }
+    .autocomplete-results {
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+        position: absolute;
+        width: 100%;
+        z-index: 1000;
+        display: none;
+    }
+
+    .autocomplete-results div {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .autocomplete-results div:hover {
+        background-color: #f0f0f0;
+    }
+
+</style>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var pickupInput = document.getElementById('wpforms-461-field_4');
+            if (pickupInput) {
+                var resultsDiv = document.createElement('div');
+                resultsDiv.id = 'pickup-results';
+                resultsDiv.className = 'autocomplete-results';
+                pickupInput.parentNode.insertBefore(resultsDiv, pickupInput.nextSibling);
+            }
+        });
+    </script>
+    <?php
+}
+ 
+add_action('wpforms_frontend_output', 'add_autocomplete_results_to_wpforms', 10, 1);
