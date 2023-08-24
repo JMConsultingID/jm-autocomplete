@@ -1,13 +1,14 @@
 <?php
 // Add plugin settings page
 function jm_autocomplete_plugin_settings_page() {
-    add_submenu_page(
-        'wpforms',
-        'AutoComplete Address',
-        'AutoComplete Address',
-        'manage_options',
-        'jm_autocomplete_plugin',
-        'jm_autocomplete_plugin_settings_page_content'
+    add_menu_page(
+        'AutoComplete Address',      // Judul pada menu
+        'AutoComplete Address',      // Judul pada menu utama
+        'manage_options',            // Capability yang dibutuhkan untuk mengakses menu
+        'jm_autocomplete_plugin',    // Slug menu
+        'jm_autocomplete_plugin_settings_page_content', // Callback function untuk halaman konten
+        'dashicons-location-alt',    // Ikona menu (Anda dapat mengganti dengan ikon lain)
+        75                           // Urutan di dalam menu
     );
 }
 add_action('admin_menu', 'jm_autocomplete_plugin_settings_page');
