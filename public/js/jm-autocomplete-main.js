@@ -21,7 +21,7 @@
             });
     }
 
-    function selectAddress(address, resultElementId) {
+    window.selectAddress = function(address, resultElementId) {
         const inputElementId = resultElementId.replace('-results', '');
         document.getElementById(inputElementId).value = address;
         document.getElementById(resultElementId).style.display = 'none';
