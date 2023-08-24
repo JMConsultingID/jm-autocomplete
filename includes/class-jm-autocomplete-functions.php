@@ -6,7 +6,8 @@ function jm_autocomplete_plugin_settings_page() {
         'Hai Plugin',                // Judul pada menu utama
         'Hai Plugin',                // Judul pada menu utama
         'manage_options',            // Capability yang dibutuhkan untuk mengakses menu
-        'hai_plugin',    // Slug menu utama
+        'hai_plugin',                // Slug menu utama
+        'hai_plugin_settings_page_content', // Callback function untuk halaman konten
         'dashicons-location-alt',    // Ikona menu (Anda dapat mengganti dengan ikon lain)
         75                           // Urutan di dalam menu
     );
