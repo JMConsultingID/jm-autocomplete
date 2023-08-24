@@ -228,7 +228,7 @@ function jm_autocomplete_plugin_form_field_callback() {
     $form_field = get_option('jm_autocomplete_plugin_form_field');
     echo '<div class="pickup-fields">';
     echo '<select name="jm_autocomplete_plugin_form_field">';
-        $forms = wpforms()->form->get_all();
+        $forms = wpforms()->form->get('', array('number' => -1));
         $selected_form_id = get_option('selected_wpform_id', '');
         foreach ($forms as $form) {
             echo '<option value="' . esc_attr($form->ID) . '" ' . selected($selected_form_id, $form->ID, false) . '>' . esc_html($form->post_title) . '</option>';
