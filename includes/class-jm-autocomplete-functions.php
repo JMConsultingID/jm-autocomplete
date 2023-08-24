@@ -254,7 +254,7 @@ function jm_autocomplete_plugin_pickup_field_callback() {
 
 // Render pickup field
 function jm_autocomplete_plugin_destination_field_callback() {
-    $pickup_field = get_option('jm_autocomplete_plugin_destination_field');
+    $destination_field = get_option('jm_autocomplete_plugin_destination_field');
     echo '<div class="pickup-fields">';
     echo '<select name="jm_autocomplete_plugin_destination_field">';
         $form_id = get_option('jm_autocomplete_plugin_form_field');
