@@ -361,3 +361,20 @@ function add_autocomplete_results_to_wpforms($form_data) {
 }
  
 add_action('wpforms_frontend_output', 'add_autocomplete_results_to_wpforms', 10, 1);
+
+
+function enqueue_autocomplete_address_plugin_assets() {
+    // Hanya tambahkan style dan script jika form dengan ID 461 ditampilkan
+    if (has_shortcode('wpforms', 'id="461"')) {
+        // Enqueue styles
+        wp_enqueue_style('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css');
+        wp_enqueue_style('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css');
+
+        // Enqueue scripts
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js', array(), null, true);
+        wp_enqueue_script('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js', array('mapbox-gl'), null, true);
+        wp_enqueue_script('autocomplete-address-plugin-script', plugin_dir_url(__FILE__) . '/../public/js/jm-autocomplete-main.js', array('jquery', 'mapbox-gl', 'mapbox-gl-geocoder'), null, true);
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets');
