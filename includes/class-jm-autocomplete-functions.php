@@ -37,7 +37,12 @@ function hai_plugin_settings_page_content() {
 function jm_autocomplete_plugin_settings_page_content() {
     ?>
     <div class="wrap">
-        <h2>AutoComplete Address Plugin Settings</h2>        
+        <h2>AutoComplete Address Plugin Settings</h2>
+        <?php
+            settings_fields('jm_autocomplete_plugin_settings');
+            do_settings_sections('jm_autocomplete_plugin_settings');
+            submit_button();
+        ?>        
     </div>
     <?php
 }
