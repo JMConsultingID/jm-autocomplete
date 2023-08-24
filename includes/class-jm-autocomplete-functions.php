@@ -38,11 +38,13 @@ function jm_autocomplete_plugin_settings_page_content() {
     ?>
     <div class="wrap">
         <h2>AutoComplete Address Plugin Settings</h2>
-        <?php
+        <form method="post" action="options.php">
+            <?php
             settings_fields('jm_autocomplete_plugin_settings');
             do_settings_sections('jm_autocomplete_plugin_settings');
             submit_button();
-        ?>        
+            ?>
+        </form>       
     </div>
     <?php
 }
@@ -88,6 +90,14 @@ function jm_autocomplete_plugin_settings_fields() {
         'jm_autocomplete_plugin_settings',
         'jm_autocomplete_plugin_general'
     );
+
+    add_settings_field(
+        'jm_autocomplete_plugin_form_field',
+        'Select WPForm',
+        'jm_autocomplete_plugin_form_field_callback',
+        'jm_autocomplete_plugin_settings',
+        'jm_autocomplete_plugin_general'
+    ); 
 
     add_settings_field(
         'jm_autocomplete_plugin_pickup_field',
@@ -139,6 +149,10 @@ function jm_autocomplete_plugin_settings_fields() {
         'jm_autocomplete_plugin_google_api_key'
     );
 
+    register_setting(
+        'jm_autocomplete_plugin_settings',
+        'jm_autocomplete_plugin_form_field'
+    );    
 
     register_setting(
         'jm_autocomplete_plugin_settings',
@@ -209,12 +223,25 @@ function jm_autocomplete_plugin_google_api_key_callback() {
     echo '</div>';
 }
 
+// Render Form WP Form
+function jm_autocomplete_plugin_form_field_callback() {
+    $form_field = get_option('jm_autocomplete_plugin_form_field');
+    echo '<div class="pickup-fields">';
+    echo '<select name="jm_autocomplete_plugin_form_field">';
+        $forms = wpforms()->form->get_all();
+        $selected_form_id = get_option('selected_wpform_id', '');
+        foreach ($forms as $form) {
+            echo '<option value="' . esc_attr($form->ID) . '" ' . selected($selected_form_id, $form->ID, false) . '>' . esc_html($form->post_title) . '</option>';
+        }
+    echo '</select>';  
+}
+
 // Render pickup field
 function jm_autocomplete_plugin_pickup_field_callback() {
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
     echo '<div class="pickup-fields">';
     echo '<select name="jm_autocomplete_plugin_pickup_field">';
-        $form_id = 461; // ID form WPForms Anda
+        $form_id = get_option('jm_autocomplete_plugin_form_field');
         $form = wpforms()->form->get($form_id);
         if ($form) {
             $fields = wpforms_decode($form->post_content);
@@ -222,6 +249,7 @@ function jm_autocomplete_plugin_pickup_field_callback() {
                 echo '<option value="' . esc_attr($field['id']) . '">' . esc_html($field['label']) . '</option>';
             }
         }
+    echo '</select>';
 }
 
 // Render destination field
