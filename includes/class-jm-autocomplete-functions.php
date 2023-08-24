@@ -262,7 +262,7 @@ function jm_autocomplete_plugin_destination_field_callback() {
         if ($form) {
             $fields = wpforms_decode($form->post_content);
             foreach ($fields['fields'] as $field) {
-                echo '<option value="' . esc_attr($field['id']) . '">' . esc_html($field['label']) . '</option>';
+                echo '<option value="' . esc_attr($field['id']) . '" ' . selected($destination_field, $field['id'], false) . '>' . esc_html($field['label']) . '</option>';
             }
         }
     echo '</select>';
