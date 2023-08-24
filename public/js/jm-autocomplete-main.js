@@ -72,7 +72,7 @@
         console.log("Pickup inputElementId:", pickupCity );
         console.log("Destination inputElementId:", destinationCity );
 
-        if (pickupCity && destinationCity && pickupCity !== destinationCity) {
+        if (pickupCity == destinationCity) {
             errorMessage.style.display = 'block';
             console.log("Result: True");
         } else {
