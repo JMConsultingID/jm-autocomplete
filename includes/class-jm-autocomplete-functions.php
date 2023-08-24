@@ -9,7 +9,7 @@ function jm_autocomplete_plugin_settings_page() {
         'hai_plugin',                // Slug menu utama
         'hai_plugin_settings_page_content', // Callback function untuk halaman konten
         'dashicons-location-alt',    // Ikona menu (Anda dapat mengganti dengan ikon lain)
-        75                           // Urutan di dalam menu
+        45                           // Urutan di dalam menu
     );
 
     add_submenu_page(
