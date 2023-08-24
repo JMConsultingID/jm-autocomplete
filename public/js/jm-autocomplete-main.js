@@ -50,7 +50,7 @@ function fetchAddresses(query, resultElement) {
 }
 
 function selectAddress(address, resultElementId) {
-    const inputElementId = resultElementId.replace('-results', '-input');
+    const inputElementId = resultElementId.replace('-results', '');
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
 
@@ -71,9 +71,9 @@ function selectAddress(address, resultElementId) {
     }
 
     // Set values to hidden fields
-    document.getElementById(inputElementId.replace('-input', '-city')).value = city;
-    document.getElementById(inputElementId.replace('-input', '-state')).value = state;
-    document.getElementById(inputElementId.replace('-input', '-zip')).value = zip;
+    document.getElementById(inputElementId + '-city').value = city;
+    document.getElementById(inputElementId + '-state').value = state;
+    document.getElementById(inputElementId + '-zip').value = zip;
     checkCitiesAndDisplayError();
 }
 
