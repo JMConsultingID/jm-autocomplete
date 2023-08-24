@@ -252,12 +252,20 @@ function jm_autocomplete_plugin_pickup_field_callback() {
     echo '</select>';
 }
 
-// Render destination field
+// Render pickup field
 function jm_autocomplete_plugin_destination_field_callback() {
-    $destination_field = get_option('jm_autocomplete_plugin_destination_field');
-    echo '<div class="destination-fields">';
-    echo '<input type="text" name="jm_autocomplete_plugin_destination_field" value="' . $destination_field. '" style="width: 400px;" />';
-    echo '</div>';
+    $pickup_field = get_option('jm_autocomplete_plugin_destination_field');
+    echo '<div class="pickup-fields">';
+    echo '<select name="jm_autocomplete_plugin_destination_field">';
+        $form_id = get_option('jm_autocomplete_plugin_form_field');
+        $form = wpforms()->form->get($form_id);
+        if ($form) {
+            $fields = wpforms_decode($form->post_content);
+            foreach ($fields['fields'] as $field) {
+                echo '<option value="' . esc_attr($field['id']) . '">' . esc_html($field['label']) . '</option>';
+            }
+        }
+    echo '</select>';
 }
 
 
@@ -275,3 +283,24 @@ function jm_autocomplete_plugin_enable_response_header_callback() {
     </label>
     <?php
 }
+
+function add_hidden_fields_to_wpforms($form_output, $form_data, $fields, $entry, $form_id) {
+    // Cek apakah form yang dimuat adalah form dengan ID 461
+    if ($form_id == 461) {
+        $hidden_fields = '
+        <input type="hidden" id="pickup-city">
+        <input type="hidden" id="pickup-state">
+        <input type="hidden" id="pickup-zip">
+
+        <input type="hidden" id="destination-city">
+        <input type="hidden" id="destination-state">
+        <input type="hidden" id="destination-zip">
+        ';
+
+        // Masukkan field tersembunyi ke output form
+        $form_output = str_replace('</form>', $hidden_fields . '</form>', $form_output);
+    }
+
+    return $form_output;
+}
+add_filter('wpforms_frontend_output', 'add_hidden_fields_to_wpforms', 10, 5);
