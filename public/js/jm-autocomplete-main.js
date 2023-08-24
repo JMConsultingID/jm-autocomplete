@@ -90,13 +90,13 @@ function checkCitiesAndDisplayError() {
 }
 
 
-document.getElementById('pickup-input').addEventListener('input', (e) => {
+document.getElementById('wpforms-461-field_4').addEventListener('input', (e) => {
     if (e.target.value.length > 2) {
         fetchAddresses(e.target.value, document.getElementById('pickup-results'));
     }
 });
 
-document.getElementById('destination-input').addEventListener('input', (e) => {
+document.getElementById('wpforms-461-field_5').addEventListener('input', (e) => {
     if (e.target.value.length > 2) {
         fetchAddresses(e.target.value, document.getElementById('destination-results'));
     }
