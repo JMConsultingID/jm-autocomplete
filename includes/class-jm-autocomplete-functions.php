@@ -213,8 +213,15 @@ function jm_autocomplete_plugin_google_api_key_callback() {
 function jm_autocomplete_plugin_pickup_field_callback() {
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
     echo '<div class="pickup-fields">';
-    echo '<input type="text" name="jm_autocomplete_plugin_pickup_field" value="' . $pickup_field. '" style="width: 400px;" />';
-    echo '</div>';
+    echo '<select name="jm_autocomplete_plugin_pickup_field">';
+        $form_id = 461; // ID form WPForms Anda
+        $form = wpforms()->form->get($form_id);
+        if ($form) {
+            $fields = wpforms_decode($form->post_content);
+            foreach ($fields['fields'] as $field) {
+                echo '<option value="' . esc_attr($field['id']) . '">' . esc_html($field['label']) . '</option>';
+            }
+        }
 }
 
 // Render destination field
