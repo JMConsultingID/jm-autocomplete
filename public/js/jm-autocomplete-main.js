@@ -22,7 +22,7 @@
     }
 
     window.selectAddress = function(address, resultElementId) {
-        const inputElementId = resultElementId.replace('-results', '');
+        const inputElementId = resultElementId.replace('-results', 'wpforms-461-field_4');
         document.getElementById(inputElementId).value = address;
         document.getElementById(resultElementId).style.display = 'none';
 
