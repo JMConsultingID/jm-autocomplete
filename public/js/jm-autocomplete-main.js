@@ -22,31 +22,38 @@
     }
 
     window.selectAddress = function(address, resultElementId) {
-        const inputElementId = resultElementId.replace('pickup-results', 'wpforms-461-field_4');
-        document.getElementById(inputElementId).value = address;
-        document.getElementById(resultElementId).style.display = 'none';
+        console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
 
-        const context = currentContext[address];
+    const inputElementId = resultElementId.replace('-results', '');
+    console.log("Determined inputElementId:", inputElementId);
 
-        // Extract city, state, and zip from context
-        let city = '';
-        let state = '';
-        let zip = '';
-        for (let item of context) {
-            if (item.id.startsWith('place')) {
-                city = item.text;
-            } else if (item.id.startsWith('region')) {
-                state = item.text;
-            } else if (item.id.startsWith('postcode')) {
-                zip = item.text;
-            }
+    document.getElementById(inputElementId).value = address;
+    document.getElementById(resultElementId).style.display = 'none';
+
+    const context = currentContext[address];
+    console.log("Context for the address:", context);
+
+    // Extract city, state, and zip from context
+    let city = '';
+    let state = '';
+    let zip = '';
+    for (let item of context) {
+        if (item.id.startsWith('place')) {
+            city = item.text;
+        } else if (item.id.startsWith('region')) {
+            state = item.text;
+        } else if (item.id.startsWith('postcode')) {
+            zip = item.text;
         }
+    }
 
-        // Set values to hidden fields
-        document.getElementById(inputElementId + '-city').value = city;
-        document.getElementById(inputElementId + '-state').value = state;
-        document.getElementById(inputElementId + '-zip').value = zip;
-        checkCitiesAndDisplayError();
+    console.log("Extracted city:", city, "state:", state, "zip:", zip);
+
+    // Set values to hidden fields
+    document.getElementById(inputElementId + '-city').value = city;
+    document.getElementById(inputElementId + '-state').value = state;
+    document.getElementById(inputElementId + '-zip').value = zip;
+    checkCitiesAndDisplayError();
     }
 
     function checkCitiesAndDisplayError() {
