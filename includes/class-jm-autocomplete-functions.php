@@ -293,13 +293,13 @@ function add_hidden_fields_to_wpforms($form_data) {
  
     // Add the hidden fields
     echo '
-    <input type="hidden" id="pickup-city">
-    <input type="hidden" id="pickup-state">
-    <input type="hidden" id="pickup-zip">
+    <input type="hidden" id="wpforms-461-field_4-city">
+    <input type="hidden" id="wpforms-461-field_4-state">
+    <input type="hidden" id="wpforms-461-field_4-zip">
 
-    <input type="hidden" id="destination-city">
-    <input type="hidden" id="destination-state">
-    <input type="hidden" id="destination-zip">
+    <input type="hidden" id="wpforms-461-field_5-city">
+    <input type="hidden" id="wpforms-461-field_5-state">
+    <input type="hidden" id="dwpforms-461-field_5-zip">
     ';
 }
  
