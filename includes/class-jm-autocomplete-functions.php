@@ -284,23 +284,23 @@ function jm_autocomplete_plugin_enable_response_header_callback() {
     <?php
 }
 
-function add_hidden_fields_to_wpforms($form_output, $form_data, $fields, $entry, $form_id) {
-    // Cek apakah form yang dimuat adalah form dengan ID 461
-    if ( absint( $form_data[ 'id' ] ) == 461 ) {
-        $hidden_fields = '
-        <input type="hidden" id="pickup-city">
-        <input type="hidden" id="pickup-state">
-        <input type="hidden" id="pickup-zip">
-
-        <input type="hidden" id="destination-city">
-        <input type="hidden" id="destination-state">
-        <input type="hidden" id="destination-zip">
-        ';
-
-        // Masukkan field tersembunyi ke output form
-        $form_output = str_replace('</form>', $hidden_fields . '</form>', $form_output);
+function add_hidden_fields_to_wpforms($form_data) {
+ 
+    // Check if the form ID is 461
+    if (absint($form_data['id']) !== 461) {
+        return;
     }
+ 
+    // Add the hidden fields
+    echo '
+    <input type="hidden" id="pickup-city">
+    <input type="hidden" id="pickup-state">
+    <input type="hidden" id="pickup-zip">
 
-    return $form_output;
+    <input type="hidden" id="destination-city">
+    <input type="hidden" id="destination-state">
+    <input type="hidden" id="destination-zip">
+    ';
 }
-add_filter('wpforms_frontend_output', 'add_hidden_fields_to_wpforms', 10, 5);
+ 
+add_action('wpforms_frontend_output', 'add_hidden_fields_to_wpforms', 10, 1);
