@@ -6,9 +6,7 @@ function jm_autocomplete_plugin_settings_page() {
         'AutoComplete Address',      // Judul pada menu utama
         'manage_options',            // Capability yang dibutuhkan untuk mengakses menu
         'jm_autocomplete_plugin',    // Slug menu
-        'jm_autocomplete_plugin_settings_page_content', // Callback function untuk halaman konten
-        'dashicons-location-alt',    // Ikona menu (Anda dapat mengganti dengan ikon lain)
-        75                           // Urutan di dalam menu
+        'jm_autocomplete_plugin_settings_page_content'
     );
 }
 add_action('admin_menu', 'jm_autocomplete_plugin_settings_page');
