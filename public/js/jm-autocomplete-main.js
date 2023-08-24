@@ -65,8 +65,8 @@
     }
 
     function checkCitiesAndDisplayError() {
-        const pickupCity = document.getElementById('pickup-city').value;
-        const destinationCity = document.getElementById('destination-city').value;
+        const pickupCity = document.getElementById('wpforms-461-field_4-city').value;
+        const destinationCity = document.getElementById('wpforms-461-field_5-city').value;
         const errorMessage = document.getElementById('error-message');
 
         if (pickupCity && destinationCity && pickupCity !== destinationCity) {

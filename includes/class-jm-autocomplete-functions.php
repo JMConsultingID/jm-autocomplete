@@ -293,6 +293,7 @@ function add_hidden_fields_to_wpforms($form_data) {
  
     // Add the hidden fields
     echo '
+    <label id="error-message" style="color: red; display: none;">Destination city must be different from the pickup city!</label>
     <input type="hidden" id="wpforms-461-field_4-city">
     <input type="hidden" id="wpforms-461-field_4-state">
     <input type="hidden" id="wpforms-461-field_4-zip">
