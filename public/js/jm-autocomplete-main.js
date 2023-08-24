@@ -69,8 +69,12 @@
         const destinationCity = document.getElementById('wpforms-461-field_5-city').value;
         const errorMessage = document.getElementById('error-message');
 
+        console.log("Pickup inputElementId:", pickupCity );
+        console.log("Destination inputElementId:", destinationCity );
+
         if (pickupCity && destinationCity && pickupCity !== destinationCity) {
             errorMessage.style.display = 'block';
+            console.log("Result:", True );
         } else {
             errorMessage.style.display = 'none';
         }
