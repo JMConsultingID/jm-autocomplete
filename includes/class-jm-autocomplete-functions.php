@@ -300,7 +300,7 @@ function add_hidden_fields_to_wpforms($form_data) {
 
     <input type="hidden" id="wpforms-461-field_5-city">
     <input type="hidden" id="wpforms-461-field_5-state">
-    <input type="hidden" id="dwpforms-461-field_5-zip">
+    <input type="hidden" id="wpforms-461-field_5-zip">
     ';
 }
  
