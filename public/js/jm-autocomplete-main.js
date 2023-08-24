@@ -22,9 +22,17 @@
     }
 
     window.selectAddress = function(address, resultElementId) {
-        console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
+    console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
 
-    const inputElementId = resultElementId.replace('-results', '');
+    let inputElementId;
+    if (resultElementId === 'pickup-results') {
+        inputElementId = 'wpforms-461-field_4';
+    } else if (resultElementId === 'destination-results') {
+        inputElementId = 'wpforms-461-field_5';
+    } else {
+        console.error("Unknown resultElementId:", resultElementId);
+        return;
+    }
     console.log("Determined inputElementId:", inputElementId);
 
     document.getElementById(inputElementId).value = address;
