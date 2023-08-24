@@ -286,7 +286,7 @@ function jm_autocomplete_plugin_enable_response_header_callback() {
 
 function add_hidden_fields_to_wpforms($form_output, $form_data, $fields, $entry, $form_id) {
     // Cek apakah form yang dimuat adalah form dengan ID 461
-    if ($form_id == 461) {
+    if ( absint( $form_data[ 'id' ] ) == 461 ) {
         $hidden_fields = '
         <input type="hidden" id="pickup-city">
         <input type="hidden" id="pickup-state">
