@@ -74,9 +74,10 @@
 
         if (pickupCity && destinationCity && pickupCity !== destinationCity) {
             errorMessage.style.display = 'block';
-            console.log("Result:", True );
+            console.log("Result: True");
         } else {
             errorMessage.style.display = 'none';
+            console.log("Result: False");
         }
     }
 
