@@ -342,11 +342,18 @@ function add_autocomplete_results_to_wpforms($form_data) {
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
             var pickupInput = document.getElementById('wpforms-461-field_4');
+            var destinationInput = document.getElementById('wpforms-461-field_5');
             if (pickupInput) {
                 var resultsDiv = document.createElement('div');
                 resultsDiv.id = 'pickup-results';
                 resultsDiv.className = 'autocomplete-results';
                 pickupInput.parentNode.insertBefore(resultsDiv, pickupInput.nextSibling);
+            }
+            if (destinationInput) {
+                var resultsDiv = document.createElement('div');
+                resultsDiv.id = 'destination-results';
+                resultsDiv.className = 'autocomplete-results';
+                destinationInput.parentNode.insertBefore(resultsDiv, destinationInput.nextSibling);
             }
         });
     </script>
