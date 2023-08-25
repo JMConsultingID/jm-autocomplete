@@ -413,7 +413,7 @@ function enqueue_autocomplete_address_plugin_assets($form_data) {
 }
 add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 100);
 
-function add_inline_script($form_data) {
+function add_inline_script() {
     global $post;
     $form_field = get_option('jm_autocomplete_plugin_form_field');
     if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms id="' . $form_field . '"')) {
@@ -426,10 +426,6 @@ function add_inline_script($form_data) {
     $pickup = "wpforms-".$form_field."-field_".$pickup_field;
     $destination = "wpforms-".$form_field."-field_".$destination_field;
  
-    // Check if the form ID is 461
-    if (absint($form_data['id']) !== $form_field) {
-        return;
-    }
     echo "<script>
             window.jmAutocompleteData = { 
                 mapboxApiKey: '" . esc_js($mapbox_api_key) . "',
