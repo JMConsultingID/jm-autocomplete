@@ -365,8 +365,8 @@ function add_autocomplete_results_to_wpforms($form_data) {
 </style>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            var pickupInput = document.getElementById($pickup);
-            var destinationInput = document.getElementById($destination);
+            var pickupInput = document.getElementById(<?php echo $pickup; ?>);
+            var destinationInput = document.getElementById(<?php echo $destination; ?>);
             if (pickupInput) {
                 var resultsDiv = document.createElement('div');
                 resultsDiv.id = 'pickup-results';
