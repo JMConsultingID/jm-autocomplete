@@ -380,7 +380,13 @@ function enqueue_autocomplete_address_plugin_assets() {
             'mapboxApiKey' => $mapbox_api_key
         ));
     }
-add_action('wpforms_wp_footer_end', 'enqueue_autocomplete_address_plugin_assets', 1000);
+add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 1000);
+
+function enqueue_on_wpforms_footer_end() {
+    // Meng-antrikan skrip Anda
+    wp_enqueue_script('autocomplete-address-plugin-script');
+}
+add_action('wpforms_wp_footer_end', 'enqueue_on_wpforms_footer_end');
 
 function add_inline_script() {
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
