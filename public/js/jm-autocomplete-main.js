@@ -76,7 +76,7 @@
         console.log("Pickup inputElementId:", pickupCity );
         console.log("Destination inputElementId:", destinationCity );
 
-        if (pickupCity == destinationCity) {
+        if (pickupCity && destinationCity && pickupCity !== destinationCity) {
             errorMessage.style.display = 'block';
             console.log("Result: True");
             submitButton.disabled = true;
