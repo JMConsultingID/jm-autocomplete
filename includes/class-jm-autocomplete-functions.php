@@ -285,35 +285,62 @@ function jm_autocomplete_plugin_enable_response_header_callback() {
 }
 
 function add_hidden_fields_to_wpforms($form_data) {
+    global $post;
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
+        return; // Jika kondisi terpenuhi, keluar dari fungsi
+    }
+
     $plugin_enabled = get_option('fyfx_your_propfirm_plugin_enabled');
     if ($plugin_enabled !== 'enable') {
         return;
     }
+
+    $form_field = get_option('jm_autocomplete_plugin_form_field');    
+    $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
+    $destination_field = get_option('jm_autocomplete_plugin_destination_field');
+    $pickup = "wpforms-".$form_field."-field_".$pickup_field;
+    $destination = "wpforms-".$form_field."-field_".$destination_field;
  
     // Check if the form ID is 461
-    if (absint($form_data['id']) !== 461) {
+    if (absint($form_data['id']) !== $form_field) {
         return;
     }
  
     // Add the hidden fields
     echo '
     <label id="error-message" style="color: red; display: none;">Destination city must be different from the pickup city!</label>
-    <input type="hidden" id="wpforms-461-field_4-city">
-    <input type="hidden" id="wpforms-461-field_4-state">
-    <input type="hidden" id="wpforms-461-field_4-zip">
+    <input type="hidden" id="'.$pickup.'-city">
+    <input type="hidden" id="'.$pickup.'-state">
+    <input type="hidden" id="'.$pickup.'-zip">
 
-    <input type="hidden" id="wpforms-461-field_5-city">
-    <input type="hidden" id="wpforms-461-field_5-state">
-    <input type="hidden" id="wpforms-461-field_5-zip">
+    <input type="hidden" id="'.$destination.'-city">
+    <input type="hidden" id="'.$destination.'-state">
+    <input type="hidden" id="'.$destination.'-zip">
     ';
 }
  
 add_action('wpforms_frontend_output', 'add_hidden_fields_to_wpforms', 10, 1);
 
 function add_autocomplete_results_to_wpforms($form_data) {
+
+    global $post;
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
+        return; // Jika kondisi terpenuhi, keluar dari fungsi
+    }
+
+    $plugin_enabled = get_option('fyfx_your_propfirm_plugin_enabled');
+    if ($plugin_enabled !== 'enable') {
+        return;
+    }
+
+    $form_field = get_option('jm_autocomplete_plugin_form_field');    
+    $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
+    $destination_field = get_option('jm_autocomplete_plugin_destination_field');
+    $pickup = "wpforms-".$form_field."-field_".$pickup_field;
+    $destination = "wpforms-".$form_field."-field_".$destination_field;
  
     // Check if the form ID is 461
-    if (absint($form_data['id']) !== 461) {
+    if (absint($form_data['id']) !== $form_field) {
         return;
     }
  
@@ -346,8 +373,8 @@ function add_autocomplete_results_to_wpforms($form_data) {
 </style>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
-            var pickupInput = document.getElementById('wpforms-461-field_4');
-            var destinationInput = document.getElementById('wpforms-461-field_5');
+            var pickupInput = document.getElementById($pickup);
+            var destinationInput = document.getElementById($destination);
             if (pickupInput) {
                 var resultsDiv = document.createElement('div');
                 resultsDiv.id = 'pickup-results';
@@ -373,6 +400,12 @@ function enqueue_autocomplete_address_plugin_assets() {
     if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
         return; // Jika kondisi terpenuhi, keluar dari fungsi
     }
+    $form_field = get_option('jm_autocomplete_plugin_form_field');
+ 
+    // Check if the form ID is 461
+    if (absint($form_data['id']) !== $form_field) {
+        return;
+    }
     wp_enqueue_style('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css');
     wp_enqueue_style('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css');
 
@@ -385,12 +418,21 @@ function enqueue_autocomplete_address_plugin_assets() {
 add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 100);
 
 function add_inline_script() {
+    global $post;
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
+        return; // Jika kondisi terpenuhi, keluar dari fungsi
+    }
     $form_field = get_option('jm_autocomplete_plugin_form_field');    
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');    
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
     $destination_field = get_option('jm_autocomplete_plugin_destination_field');
     $pickup = "wpforms-".$form_field."-field_".$pickup_field;
     $destination = "wpforms-".$form_field."-field_".$destination_field;
+ 
+    // Check if the form ID is 461
+    if (absint($form_data['id']) !== $form_field) {
+        return;
+    }
     echo "<script>
             window.jmAutocompleteData = { 
                 mapboxApiKey: '" . esc_js($mapbox_api_key) . "',
