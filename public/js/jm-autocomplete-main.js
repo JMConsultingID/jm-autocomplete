@@ -108,7 +108,7 @@
 	            event.preventDefault(); // Mencegah pengiriman form
 	            return false;
 	        }
-	    });
+	    }, true);
 	});
 
 
