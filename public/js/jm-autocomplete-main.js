@@ -99,8 +99,8 @@
     const form = document.querySelector('.wpforms-form'); // Selector untuk form WPForms
 
 	    form.addEventListener('submit', function(event) {
-	        const pickupCity = document.getElementById('pickup-city').value;
-	        const destinationCity = document.getElementById('destination-city').value;
+	        const pickupCity = document.getElementById('wpforms-461-field_4-city').value;
+	        const destinationCity = document.getElementById('wpforms-461-field_5-city').value;
 
 	        if (pickupCity === destinationCity) {
 	            event.preventDefault(); // Mencegah pengiriman form
