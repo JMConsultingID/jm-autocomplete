@@ -107,6 +107,7 @@
 
 	            // Tampilkan pesan kesalahan (Anda dapat menyesuaikan ini sesuai kebutuhan Anda)
 	            alert('Pickup city and destination city cannot be the same.');
+	            return false;
 	        }
 	    });
 	});
