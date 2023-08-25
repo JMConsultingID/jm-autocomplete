@@ -63,12 +63,7 @@ register_deactivation_hook( __FILE__, 'deactivate_jm_autocomplete' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-jm-autocomplete.php';
-
-global $post;
-// Cek apakah halaman saat ini memiliki shortcode WPForms
-if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'wpforms')) {
 require plugin_dir_path( __FILE__ ) . 'includes/class-jm-autocomplete-functions.php';
-}
 
 function filter_action_jm_autocomplete_links( $links ) {
      $links['settings'] = '<a href="#">' . __( 'Settings', 'jm-autocomplete' ) . '</a>';
