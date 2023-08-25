@@ -89,13 +89,13 @@
 
     $(document).ready(function() {
         $('#'+pickupField).on('input', function(e) {
-            if ($(this).val().length > 2) {
+            if ($(this).val().length > 1) {
                 fetchAddresses($(this).val(), $('#pickup-results')[0]);
             }
         });
 
         $('#'+destinationField).on('input', function(e) {
-            if ($(this).val().length > 2) {
+            if ($(this).val().length > 1) {
                 fetchAddresses($(this).val(), $('#destination-results')[0]);
             }
         });
