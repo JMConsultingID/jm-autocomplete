@@ -95,4 +95,19 @@
         });
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+	const form = document.querySelector('.wpforms-form');
+
+	    if (form) {
+	        form.addEventListener('submit', function(event) {
+	            const hasError = checkCitiesAndDisplayError();
+	            if (hasError) {
+	                event.preventDefault(); // Mencegah pengiriman form
+	                alert('Ada kesalahan pada form. Harap periksa kembali alamat pickup dan destination Anda.');
+	            }
+	        });
+	    }
+	});
+
+
 })( jQuery );
