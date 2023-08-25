@@ -367,7 +367,7 @@ add_action('wpforms_frontend_output', 'add_autocomplete_results_to_wpforms', 10,
 function enqueue_autocomplete_address_plugin_assets() {
         $form_field = get_option('jm_autocomplete_plugin_form_field');
     
-        if (!$form_field) {
+        if (empty($form_field)) {
             return; // Jika $form_field bukan true, keluar dari fungsi
         }
 
@@ -386,7 +386,7 @@ add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 1
 function add_inline_script() {
     $form_field = get_option('jm_autocomplete_plugin_form_field');
     
-    if (!$form_field) {
+    if (empty($form_field)) {
         return; // Jika $form_field bukan true, keluar dari fungsi
     }
 
