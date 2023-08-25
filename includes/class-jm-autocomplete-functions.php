@@ -113,6 +113,14 @@ function jm_autocomplete_plugin_settings_fields() {
         'jm_autocomplete_plugin_destination_field_callback',
         'jm_autocomplete_plugin_settings',
         'jm_autocomplete_plugin_general'
+    );  
+
+    add_settings_field(
+        'jm_autocomplete_plugin_error_message_field',
+        'Error Message',
+        'jm_autocomplete_plugin_error_message_field_callback',
+        'jm_autocomplete_plugin_settings',
+        'jm_autocomplete_plugin_general'
     );   
 
     add_settings_field(
@@ -164,6 +172,10 @@ function jm_autocomplete_plugin_settings_fields() {
         'jm_autocomplete_plugin_destination_field'
     );
 
+    register_setting(
+        'jm_autocomplete_plugin_settings',
+        'jm_autocomplete_plugin_error_message_field'
+    );
 
     register_setting(
         'jm_autocomplete_plugin_settings',
@@ -252,7 +264,7 @@ function jm_autocomplete_plugin_pickup_field_callback() {
     echo '</select>';
 }
 
-// Render pickup field
+// Render destination field
 function jm_autocomplete_plugin_destination_field_callback() {
     $destination_field = get_option('jm_autocomplete_plugin_destination_field');
     echo '<div class="pickup-fields">';
@@ -268,6 +280,13 @@ function jm_autocomplete_plugin_destination_field_callback() {
     echo '</select>';
 }
 
+// Render error message field
+function jm_autocomplete_plugin_error_message_field_callback() {
+    $error_message = get_option('jm_autocomplete_plugin_error_message_field');
+    echo '<div class="error_message">';
+    echo '<input type="text" name="jm_autocomplete_plugin_error_message_field" value="' . $error_message. '" style="width: 400px;" />';
+    echo '</div>';
+}
 
 // Render enable response header field
 function jm_autocomplete_plugin_enable_response_header_callback() {
@@ -327,7 +346,7 @@ function add_autocomplete_results_to_wpforms($form_data) {
     if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms') || strpos($post->post_content, 'wpforms id="' . $form_field . '"') === false) {
         return; // Jika salah satu kondisi terpenuhi, keluar dari fungsi
     }
-    
+
     $plugin_enabled = get_option('fyfx_your_propfirm_plugin_enabled');
     if ($plugin_enabled !== 'enable') {
         return;
