@@ -386,7 +386,7 @@ function enqueue_on_wpforms_footer_end() {
     // Meng-antrikan skrip Anda
     wp_enqueue_script('autocomplete-address-plugin-script');
 }
-add_action('wpforms_wp_footer_end', 'enqueue_on_wpforms_footer_end',100);
+add_action('woocommerce_after_customer_object_save', 'enqueue_on_wpforms_footer_end',100);
 
 function add_inline_script() {
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
