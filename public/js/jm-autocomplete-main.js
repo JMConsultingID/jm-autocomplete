@@ -68,6 +68,7 @@
         const pickupCity = document.getElementById('wpforms-461-field_4-city').value;
         const destinationCity = document.getElementById('wpforms-461-field_5-city').value;
         const errorMessage = document.getElementById('error-message');
+        const submitButton = document.getElementById('wpforms-submit-461');
 
         console.log("Pickup inputElementId:", pickupCity );
         console.log("Destination inputElementId:", destinationCity );
@@ -75,9 +76,11 @@
         if (pickupCity == destinationCity) {
             errorMessage.style.display = 'block';
             console.log("Result: True");
+            submitButton.disabled = true;
         } else {
             errorMessage.style.display = 'none';
             console.log("Result: False");
+            submitButton.disabled = false;
         }
     }
 
@@ -97,6 +100,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('.wpforms-form'); // Selector untuk form WPForms
+    
 
 	    form.addEventListener('submit', function(event) {
 	        const pickupCity = document.getElementById('wpforms-461-field_4-city').value;
