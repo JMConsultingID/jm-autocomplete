@@ -321,11 +321,12 @@ function add_hidden_fields_to_wpforms($form_data) {
     $destination_field = get_option('jm_autocomplete_plugin_destination_field');
     $pickup = "wpforms-".$form_field."-field_".$pickup_field;
     $destination = "wpforms-".$form_field."-field_".$destination_field;
+    $error_message = get_option('jm_autocomplete_plugin_error_message_field');
  
  
     // Add the hidden fields
     echo '
-    <label id="error-message" style="color: red; display: none;">Destination city must be different from the pickup city!</label>
+    <label id="error-message" style="color: red; display: none;">'.$error_message.'</label>
     <input type="hidden" id="'.$pickup.'-city">
     <input type="hidden" id="'.$pickup.'-state">
     <input type="hidden" id="'.$pickup.'-zip">
