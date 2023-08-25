@@ -285,6 +285,10 @@ function jm_autocomplete_plugin_enable_response_header_callback() {
 }
 
 function add_hidden_fields_to_wpforms($form_data) {
+    $plugin_enabled = get_option('fyfx_your_propfirm_plugin_enabled');
+    if ($plugin_enabled !== 'enable') {
+        return;
+    }
  
     // Check if the form ID is 461
     if (absint($form_data['id']) !== 461) {
@@ -368,7 +372,9 @@ function enqueue_autocomplete_address_plugin_assets() {
         global $post;
 
         // Cek apakah halaman saat ini memiliki shortcode WPForms
-        if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'wpforms')) {
+        if (!is_a($post, 'WP_Post') && !has_shortcode($post->post_content, 'wpforms')) {
+            return;
+        }
 
         // Enqueue styles
         wp_enqueue_style('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css');
@@ -379,14 +385,17 @@ function enqueue_autocomplete_address_plugin_assets() {
         wp_enqueue_script('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js', array(), null, true);
         wp_enqueue_script('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js', array('mapbox-gl'), null, true);
         wp_enqueue_script('autocomplete-address-plugin-script', plugin_dir_url(__FILE__) . '../public/js/jm-autocomplete-main.js', array('jquery', 'mapbox-gl', 'mapbox-gl-geocoder'), null, true);
-        }
+        
     }
 add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 100);
 
 function add_inline_script() {
     global $post;
     // Cek apakah halaman saat ini memiliki shortcode WPForms
-    if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'wpforms')) {
+     // Cek apakah halaman saat ini memiliki shortcode WPForms
+    if (!is_a($post, 'WP_Post') && !has_shortcode($post->post_content, 'wpforms')) {
+        return;
+    }
     $form_field = get_option('jm_autocomplete_plugin_form_field');
     
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
@@ -403,6 +412,5 @@ function add_inline_script() {
                 destinationField: '" . esc_js($destination) . "' 
 
             };</script>";
-    }
 }
 add_action('wp_footer', 'add_inline_script', 1); // Prioritas 1 untuk memastikannya dimuat sebelum script lainnya
