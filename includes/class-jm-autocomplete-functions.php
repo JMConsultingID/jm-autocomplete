@@ -286,8 +286,10 @@ function jm_autocomplete_plugin_enable_response_header_callback() {
 
 function add_hidden_fields_to_wpforms($form_data) {
     global $post;
-    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
-        return; // Jika kondisi terpenuhi, keluar dari fungsi
+    $form_field = get_option('jm_autocomplete_plugin_form_field'); 
+    // Cek apakah halaman saat ini memiliki shortcode WPForms dengan ID yang sesuai
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms') || strpos($post->post_content, 'wpforms id="' . $form_field . '"') === false) {
+        return; // Jika salah satu kondisi terpenuhi, keluar dari fungsi
     }
 
     $plugin_enabled = get_option('fyfx_your_propfirm_plugin_enabled');
@@ -320,10 +322,12 @@ add_action('wpforms_frontend_output', 'add_hidden_fields_to_wpforms', 10, 1);
 function add_autocomplete_results_to_wpforms($form_data) {
 
     global $post;
-    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
-        return; // Jika kondisi terpenuhi, keluar dari fungsi
+    $form_field = get_option('jm_autocomplete_plugin_form_field'); 
+    // Cek apakah halaman saat ini memiliki shortcode WPForms dengan ID yang sesuai
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms') || strpos($post->post_content, 'wpforms id="' . $form_field . '"') === false) {
+        return; // Jika salah satu kondisi terpenuhi, keluar dari fungsi
     }
-
+    
     $plugin_enabled = get_option('fyfx_your_propfirm_plugin_enabled');
     if ($plugin_enabled !== 'enable') {
         return;
@@ -408,10 +412,11 @@ add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 1
 
 function add_inline_script() {
     global $post;
-    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
-        return; // Jika kondisi terpenuhi, keluar dari fungsi
-    }
-    $form_field = get_option('jm_autocomplete_plugin_form_field');    
+    $form_field = get_option('jm_autocomplete_plugin_form_field'); 
+    // Cek apakah halaman saat ini memiliki shortcode WPForms dengan ID yang sesuai
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms') || strpos($post->post_content, 'wpforms id="' . $form_field . '"') === false) {
+        return; // Jika salah satu kondisi terpenuhi, keluar dari fungsi
+    }   
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');    
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
     $destination_field = get_option('jm_autocomplete_plugin_destination_field');
