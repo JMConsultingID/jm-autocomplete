@@ -390,6 +390,18 @@ add_action('woocommerce_after_customer_object_save', 'enqueue_on_wpforms_footer_
 
 function add_inline_script() {
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
-    echo "<script>window.jmAutocompleteData = { mapboxApiKey: '" . esc_js($mapbox_api_key) . "' };</script>";
+    $form_field = get_option('jm_autocomplete_plugin_form_field');
+    $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
+    $destination_field = get_option('jm_autocomplete_plugin_destination_field');
+    $pickup = "wp-forms-".$form_field."-field_".$pickup_field;
+    $destination = "wp-forms-".$form_field."-field_".$destination_field;
+    echo "<script>
+            window.jmAutocompleteData = { 
+                mapboxApiKey: '" . esc_js($mapbox_api_key) . "',
+                formId: '" . esc_js($form_field) . "',
+                pickupField: '" . esc_js($pickup) . "',
+                destinationField: '" . esc_js($destination) . "' 
+
+            };</script>";
 }
 add_action('wp_footer', 'add_inline_script', 1); // Prioritas 1 untuk memastikannya dimuat sebelum script lainnya

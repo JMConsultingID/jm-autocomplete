@@ -3,6 +3,9 @@
 
     const accessToken = jmAutocompleteData.mapboxApiKey; // Ganti dengan token akses Mapbox Anda
     let currentContext = {};
+    let formID = jmAutocompleteData.formId;
+    let pickupField = jmAutocompleteData.pickupField;
+    let destinationField = jmAutocompleteData.destinationField;
 
     function fetchAddresses(query, resultElement) {
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${accessToken}&country=US`;
@@ -26,9 +29,9 @@
 
     let inputElementId;
     if (resultElementId === 'pickup-results') {
-        inputElementId = 'wpforms-461-field_4';
+        inputElementId = pickupField;
     } else if (resultElementId === 'destination-results') {
-        inputElementId = 'wpforms-461-field_5';
+        inputElementId = destinationField;
     } else {
         console.error("Unknown resultElementId:", resultElementId);
         return;
@@ -65,10 +68,10 @@
     }
 
     function checkCitiesAndDisplayError() {
-        const pickupCity = document.getElementById('wpforms-461-field_4-city').value;
-        const destinationCity = document.getElementById('wpforms-461-field_5-city').value;
+        const pickupCity = document.getElementById(pickupField + '-city').value;
+        const destinationCity = document.getElementById(destinationField + '-city').value;
         const errorMessage = document.getElementById('error-message');
-        const submitButton = document.getElementById('wpforms-submit-461');
+        const submitButton = document.getElementById('wpforms-submit-' + formID);
 
         console.log("Pickup inputElementId:", pickupCity );
         console.log("Destination inputElementId:", destinationCity );
@@ -85,35 +88,18 @@
     }
 
     $(document).ready(function() {
-        $('#wpforms-461-field_4').on('input', function(e) {
+        $('#'+pickupField).on('input', function(e) {
             if ($(this).val().length > 2) {
                 fetchAddresses($(this).val(), $('#pickup-results')[0]);
             }
         });
 
-        $('#wpforms-461-field_5').on('input', function(e) {
+        $('#'+destinationField).on('input', function(e) {
             if ($(this).val().length > 2) {
                 fetchAddresses($(this).val(), $('#destination-results')[0]);
             }
         });
     });
-
-    document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('.wpforms-form'); // Selector untuk form WPForms
-    
-
-	    form.addEventListener('submit', function(event) {
-	        const pickupCity = document.getElementById('wpforms-461-field_4-city').value;
-	        const destinationCity = document.getElementById('wpforms-461-field_5-city').value;
-
-	        if (pickupCity == destinationCity) {    
-				const errorMessage = document.getElementById('error-message');
-				errorMessage.style.display = 'block';
-	            event.preventDefault(); // Mencegah pengiriman form
-	            return false;
-	        }
-	    }, true);
-	});
 
 
 
