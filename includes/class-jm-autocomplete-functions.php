@@ -397,15 +397,11 @@ add_action('wpforms_frontend_output', 'add_autocomplete_results_to_wpforms', 10,
 
 function enqueue_autocomplete_address_plugin_assets($form_data) {
     global $post;
-    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
-        return; // Jika kondisi terpenuhi, keluar dari fungsi
-    }
     $form_field = get_option('jm_autocomplete_plugin_form_field');
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms id="' . $form_field . '"')) {
+        return; // Jika kondisi terpenuhi, keluar dari fungsi
+    }  
  
-    // Check if the form ID is 461
-    if (absint($form_data['id']) !== $form_field) {
-        return;
-    }
     wp_enqueue_style('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css');
     wp_enqueue_style('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css');
 
@@ -419,9 +415,10 @@ add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 1
 
 function add_inline_script($form_data) {
     global $post;
-    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
+    $form_field = get_option('jm_autocomplete_plugin_form_field');
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms id="' . $form_field . '"')) {
         return; // Jika kondisi terpenuhi, keluar dari fungsi
-    }
+    } 
     $form_field = get_option('jm_autocomplete_plugin_form_field');    
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');    
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
