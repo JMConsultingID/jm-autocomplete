@@ -365,6 +365,12 @@ add_action('wpforms_frontend_output', 'add_autocomplete_results_to_wpforms', 10,
 
 
 function enqueue_autocomplete_address_plugin_assets() {
+        $form_field = get_option('jm_autocomplete_plugin_form_field');
+    
+        if (!$form_field) {
+            return; // Jika $form_field bukan true, keluar dari fungsi
+        }
+
         // Enqueue styles
         wp_enqueue_style('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css');
         wp_enqueue_style('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css');
@@ -374,23 +380,18 @@ function enqueue_autocomplete_address_plugin_assets() {
         wp_enqueue_script('mapbox-gl', 'https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js', array(), null, true);
         wp_enqueue_script('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js', array('mapbox-gl'), null, true);
         wp_enqueue_script('autocomplete-address-plugin-script', plugin_dir_url(__FILE__) . '../public/js/jm-autocomplete-main.js', array('jquery', 'mapbox-gl', 'mapbox-gl-geocoder'), null, true);
-        // Pass the API key to JavaScript
-        $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
-        wp_localize_script('jm-autocomplete-main', 'jmAutocompleteData', array(
-            'mapboxApiKey' => $mapbox_api_key
-        ));
     }
 add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 100);
 
-function enqueue_on_wpforms_footer_end() {
-    // Meng-antrikan skrip Anda
-    wp_enqueue_script('autocomplete-address-plugin-script');
-}
-add_action('woocommerce_after_customer_object_save', 'enqueue_on_wpforms_footer_end',100);
-
 function add_inline_script() {
-    $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
     $form_field = get_option('jm_autocomplete_plugin_form_field');
+    
+    if (!$form_field) {
+        return; // Jika $form_field bukan true, keluar dari fungsi
+    }
+
+    $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
+    
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
     $destination_field = get_option('jm_autocomplete_plugin_destination_field');
     $pickup = "wpforms-".$form_field."-field_".$pickup_field;
