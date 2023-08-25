@@ -301,10 +301,6 @@ function add_hidden_fields_to_wpforms($form_data) {
     $pickup = "wpforms-".$form_field."-field_".$pickup_field;
     $destination = "wpforms-".$form_field."-field_".$destination_field;
  
-    // Check if the form ID is 461
-    if (absint($form_data['id']) !== $form_field) {
-        return;
-    }
  
     // Add the hidden fields
     echo '
@@ -339,10 +335,6 @@ function add_autocomplete_results_to_wpforms($form_data) {
     $pickup = "wpforms-".$form_field."-field_".$pickup_field;
     $destination = "wpforms-".$form_field."-field_".$destination_field;
  
-    // Check if the form ID is 461
-    if (absint($form_data['id']) !== $form_field) {
-        return;
-    }
  
     // Add the autocomplete results div after the Pickup input
     ?>
