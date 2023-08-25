@@ -390,7 +390,7 @@ add_action('wpforms_frontend_output', 'add_autocomplete_results_to_wpforms', 10,
 function enqueue_autocomplete_address_plugin_assets() {
     global $post;
     $form_field = get_option('jm_autocomplete_plugin_form_field'); 
-    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms') || !has_shortcode($post->post_content, 'wpforms id="' . $form_field . '"')) {
+    if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms') || !has_shortcode($post->post_content, 'wpforms id="461"')) {
         return; // Jika kondisi terpenuhi, keluar dari fungsi
     }
  
