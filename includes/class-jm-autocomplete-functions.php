@@ -393,8 +393,8 @@ function add_inline_script() {
     $form_field = get_option('jm_autocomplete_plugin_form_field');
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
     $destination_field = get_option('jm_autocomplete_plugin_destination_field');
-    $pickup = "wp-forms-".$form_field."-field_".$pickup_field;
-    $destination = "wp-forms-".$form_field."-field_".$destination_field;
+    $pickup = "wpforms-".$form_field."-field_".$pickup_field;
+    $destination = "wpforms-".$form_field."-field_".$destination_field;
     echo "<script>
             window.jmAutocompleteData = { 
                 mapboxApiKey: '" . esc_js($mapbox_api_key) . "',
