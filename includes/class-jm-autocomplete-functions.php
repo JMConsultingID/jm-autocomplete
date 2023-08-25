@@ -375,7 +375,7 @@ function enqueue_autocomplete_address_plugin_assets() {
         wp_enqueue_script('mapbox-gl-geocoder', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js', array('mapbox-gl'), null, true);
         wp_enqueue_script('autocomplete-address-plugin-script', plugin_dir_url(__FILE__) . '../public/js/jm-autocomplete-main.js', array('jquery', 'mapbox-gl', 'mapbox-gl-geocoder'), null, true);
         // Pass the API key to JavaScript
-        $mapbox_api_key = jm_autocomplete_plugin_mapbox_api_key();
+        $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');
         wp_localize_script('jm-autocomplete-main', 'jmAutocompleteData', array(
             'mapboxApiKey' => $mapbox_api_key
         ));
