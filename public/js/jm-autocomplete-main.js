@@ -1,7 +1,7 @@
 (function( $ ) {
     'use strict';
 
-    const accessToken = 'pk.eyJ1Ijoia2V0dXRhcmRpa2EiLCJhIjoiY2xsb3Z5b3d6MDA5NDNmbnFzeHp6OGFwOSJ9.RUrg03_5uLOp17czGL8k2w'; // Ganti dengan token akses Mapbox Anda
+    const accessToken = jmAutocompleteData.mapboxApiKey; // Ganti dengan token akses Mapbox Anda
     let currentContext = {};
 
     function fetchAddresses(query, resultElement) {
