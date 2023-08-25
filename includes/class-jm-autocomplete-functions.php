@@ -395,7 +395,7 @@ function add_autocomplete_results_to_wpforms($form_data) {
 add_action('wpforms_frontend_output', 'add_autocomplete_results_to_wpforms', 10, 1);
 
 
-function enqueue_autocomplete_address_plugin_assets() {
+function enqueue_autocomplete_address_plugin_assets($form_data) {
     global $post;
     if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
         return; // Jika kondisi terpenuhi, keluar dari fungsi
@@ -417,7 +417,7 @@ function enqueue_autocomplete_address_plugin_assets() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 100);
 
-function add_inline_script() {
+function add_inline_script($form_data) {
     global $post;
     if (!is_a($post, 'WP_Post') || !has_shortcode($post->post_content, 'wpforms')) {
         return; // Jika kondisi terpenuhi, keluar dari fungsi
