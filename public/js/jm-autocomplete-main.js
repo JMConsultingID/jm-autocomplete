@@ -96,18 +96,21 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-	const form = document.querySelector('.wpforms-form');
+    const form = document.querySelector('.wpforms-form'); // Selector untuk form WPForms
 
-	    if (form) {
-	        form.addEventListener('submit', function(event) {
-	            const hasError = checkCitiesAndDisplayError();
-	            if (hasError) {
-	                event.preventDefault(); // Mencegah pengiriman form
-	                alert('Ada kesalahan pada form. Harap periksa kembali alamat pickup dan destination Anda.');
-	            }
-	        });
-	    }
+	    form.addEventListener('submit', function(event) {
+	        const pickupCity = document.getElementById('pickup-city').value;
+	        const destinationCity = document.getElementById('destination-city').value;
+
+	        if (pickupCity === destinationCity) {
+	            event.preventDefault(); // Mencegah pengiriman form
+
+	            // Tampilkan pesan kesalahan (Anda dapat menyesuaikan ini sesuai kebutuhan Anda)
+	            alert('Pickup city and destination city cannot be the same.');
+	        }
+	    });
 	});
+
 
 
 })( jQuery );
