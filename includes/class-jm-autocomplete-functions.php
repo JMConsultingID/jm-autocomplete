@@ -380,7 +380,7 @@ function enqueue_autocomplete_address_plugin_assets() {
             'mapboxApiKey' => $mapbox_api_key
         ));
     }
-add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets');
+add_action('wp_enqueue_scripts', 'enqueue_autocomplete_address_plugin_assets', 100);
 
 function add_inline_script() {
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');

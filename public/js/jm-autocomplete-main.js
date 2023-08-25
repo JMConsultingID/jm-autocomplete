@@ -102,11 +102,10 @@
 	        const pickupCity = document.getElementById('wpforms-461-field_4-city').value;
 	        const destinationCity = document.getElementById('wpforms-461-field_5-city').value;
 
-	        if (pickupCity === destinationCity) {
+	        if (pickupCity == destinationCity) {    
+				const errorMessage = document.getElementById('error-message');
+				errorMessage.style.display = 'block';
 	            event.preventDefault(); // Mencegah pengiriman form
-
-	            // Tampilkan pesan kesalahan (Anda dapat menyesuaikan ini sesuai kebutuhan Anda)
-	            alert('Pickup city and destination city cannot be the same.');
 	            return false;
 	        }
 	    });
