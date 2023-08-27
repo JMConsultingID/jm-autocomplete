@@ -47,11 +47,11 @@
 
     // Mendengarkan event 'result' dari Geocoder
     pickupGeocoder.on('result', function(e) {
-        selectAddress(e.result.place_name, 'pickup-results');
+        selectAddress('Contoh Alamat', 'pickup-results');
     });
 
     destinationGeocoder.on('result', function(e) {
-        selectAddress(e.result.place_name, 'destination-results');
+        selectAddress('Contoh Alamat s', 'destination-results');
     });
 
     window.selectAddress = function(address, resultElementId) {
