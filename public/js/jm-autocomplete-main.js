@@ -29,21 +29,21 @@
         minLength: 3
     });
 
-    // Menempelkan Geocoder ke elemen input
-    const pickupElement = document.getElementById(pickupField);
-    if (pickupElement) {
-        pickupElement.appendChild(pickupGeocoder.onAdd());
-        console.log("Appended pickupGeocoder to", pickupField);
-    } else {
-        console.log("Element with ID", pickupField, "not found.");
-    }
-    const destinationElement = document.getElementById(destinationField);
-     if (destinationElement) {
-        destinationElement.appendChild(destinationGeocoder.onAdd());
-        console.log("Appended destinationGeocoder to", destinationField);
-    } else {
-        console.log("Element with ID", destinationField, "not found.");
-    }
+    const pickupParentElement = document.getElementById(pickupField).parentNode;
+if (pickupParentElement) {
+    pickupParentElement.appendChild(pickupGeocoder.onAdd());
+    console.log("Appended pickupGeocoder to", pickupField);
+} else {
+    console.log("Parent element for ID", pickupField, "not found.");
+}
+
+const destinationParentElement = document.getElementById(destinationField).parentNode;
+if (destinationParentElement) {
+    destinationParentElement.appendChild(destinationGeocoder.onAdd());
+    console.log("Appended destinationGeocoder to", destinationField);
+} else {
+    console.log("Parent element for ID", destinationField, "not found.");
+}
 
     // Mendengarkan event 'result' dari Geocoder
     pickupGeocoder.on('result', function(e) {
