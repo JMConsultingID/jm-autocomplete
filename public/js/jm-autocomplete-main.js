@@ -31,8 +31,10 @@
     if (currentContext[address] && currentContext[address].geometry) {
         if (resultElementId === 'pickup-results') {
         window.pickupCoordinates = currentContext[address].geometry.coordinates;
+        inputElementId = pickupField;
         } else if (resultElementId === 'destination-results') {
             window.destinationCoordinates = currentContext[address].geometry.coordinates;
+            inputElementId = destinationField;
         } else {
             console.error("Unknown resultElementId:", resultElementId);
             return;
