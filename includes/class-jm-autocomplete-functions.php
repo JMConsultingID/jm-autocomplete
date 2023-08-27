@@ -113,6 +113,14 @@ function jm_autocomplete_plugin_settings_fields() {
         'jm_autocomplete_plugin_destination_field_callback',
         'jm_autocomplete_plugin_settings',
         'jm_autocomplete_plugin_general'
+    );
+
+    add_settings_field(
+        'jm_autocomplete_plugin_max_radius_field',
+        'Maximum Radius (Miles)',
+        'jm_autocomplete_plugin_max_radius_field_callback',
+        'jm_autocomplete_plugin_settings',
+        'jm_autocomplete_plugin_general'
     );  
 
     add_settings_field(
@@ -171,6 +179,11 @@ function jm_autocomplete_plugin_settings_fields() {
         'jm_autocomplete_plugin_settings',
         'jm_autocomplete_plugin_destination_field'
     );
+
+    register_setting(
+        'jm_autocomplete_plugin_settings',
+        'jm_autocomplete_plugin_max_radius_field'
+    );    
 
     register_setting(
         'jm_autocomplete_plugin_settings',
@@ -280,6 +293,13 @@ function jm_autocomplete_plugin_destination_field_callback() {
     echo '</select>';
 }
 
+// Render Max Radius field
+function jm_autocomplete_plugin_max_radius_field_callback() {
+    $max_radius = get_option('jm_autocomplete_plugin_max_radius_field');
+    echo '<div class="max_radiusd">';
+    echo '<input type="text" name="jm_autocomplete_plugin_max_radius_field" value="' . $max_radius. '" style="width: 400px;" />';
+    echo '</div>';
+}
 // Render error message field
 function jm_autocomplete_plugin_error_message_field_callback() {
     $error_message = get_option('jm_autocomplete_plugin_error_message_field');
@@ -440,6 +460,7 @@ function add_inline_script() {
     $mapbox_api_key = get_option('jm_autocomplete_plugin_mapbox_api_key');    
     $pickup_field = get_option('jm_autocomplete_plugin_pickup_field');
     $destination_field = get_option('jm_autocomplete_plugin_destination_field');
+    $max_radius = get_option('jm_autocomplete_plugin_max_radius_field');
     $pickup = "wpforms-".$form_field."-field_".$pickup_field;
     $destination = "wpforms-".$form_field."-field_".$destination_field;
  
@@ -448,8 +469,8 @@ function add_inline_script() {
                 mapboxApiKey: '" . esc_js($mapbox_api_key) . "',
                 formId: '" . esc_js($form_field) . "',
                 pickupField: '" . esc_js($pickup) . "',
-                destinationField: '" . esc_js($destination) . "' 
-
+                destinationField: '" . esc_js($destination) . "',
+                maxRadiusField: '" . esc_js($max_radius) . "'
             };</script>";
 
 }

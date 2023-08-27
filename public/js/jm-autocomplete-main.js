@@ -6,6 +6,7 @@
     let formID = jmAutocompleteData.formId;
     let pickupField = jmAutocompleteData.pickupField;
     let destinationField = jmAutocompleteData.destinationField;
+    let maxRadiusField = jmAutocompleteData.maxRadiusField;
 
     function fetchAddresses(query, resultElement) {
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${accessToken}&type=address,place,postcode,&country=US`;
@@ -81,7 +82,7 @@
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
             const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
-            if (distance > 48.2803) { // 30 mil dalam kilometer
+            if (distance > maxRadiusField) { // 30 mil dalam kilometer
                 errorMessage.style.display = 'block';
                 console.log("Result: True");
                 submitButton.disabled = true;
