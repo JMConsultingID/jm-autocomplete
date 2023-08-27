@@ -6,7 +6,6 @@
     let formID = jmAutocompleteData.formId;
     let pickupField = jmAutocompleteData.pickupField;
     let destinationField = jmAutocompleteData.destinationField;
-    let maxRadiusField = jmAutocompleteData.maxRadiusField;
 
     function fetchAddresses(query, resultElement) {
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${accessToken}&type=address,place,postcode,&country=US`;
@@ -17,7 +16,7 @@
                 const places = data.features;
                 let resultsHtml = '';
                 for (let place of places) {
-                    currentContext[place.place_name] = place;
+                    currentContext[place.place_name] = place.context;
                     resultsHtml += `<div onclick="selectAddress('${place.place_name}', '${resultElement.id}')">${place.place_name}</div>`;
                 }
                 resultElement.innerHTML = resultsHtml;
@@ -29,17 +28,13 @@
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
 
     let inputElementId;
-    if (currentContext[address] && currentContext[address].geometry) {
-        if (resultElementId === 'pickup-results') {
-        window.pickupCoordinates = currentContext[address].geometry.coordinates;
+    if (resultElementId === 'pickup-results') {
         inputElementId = pickupField;
-        } else if (resultElementId === 'destination-results') {
-            window.destinationCoordinates = currentContext[address].geometry.coordinates;
-            inputElementId = destinationField;
-        } else {
-            console.error("Unknown resultElementId:", resultElementId);
-            return;
-        }
+    } else if (resultElementId === 'destination-results') {
+        inputElementId = destinationField;
+    } else {
+        console.error("Unknown resultElementId:", resultElementId);
+        return;
     }
     console.log("Determined inputElementId:", inputElementId);
 
@@ -49,27 +44,28 @@
     const context = currentContext[address];
     console.log("Context for the address:", context);
 
+    // Extract city, state, and zip from context
+    let city = '';
+    let state = '';
+    let zip = '';
+    for (let item of context) {
+        if (item.id.startsWith('place')) {
+            city = item.text;
+        } else if (item.id.startsWith('region')) {
+            state = item.text;
+        } else if (item.id.startsWith('postcode')) {
+            zip = item.text;
+        }
+    }
 
+    console.log("Extracted city:", city, "state:", state, "zip:", zip);
+
+    // Set values to hidden fields
+    document.getElementById(inputElementId + '-city').value = city;
+    document.getElementById(inputElementId + '-state').value = state;
+    document.getElementById(inputElementId + '-zip').value = zip;
     checkCitiesAndDisplayError();
     }
-
-    function haversineDistance(coords1, coords2) {
-        function toRad(value) {
-            return value * Math.PI / 180;
-        }
-
-        const R = 6371; // radius bumi dalam kilometer
-        const dLat = toRad(coords2[1] - coords1[1]);
-        const dLon = toRad(coords2[0] - coords1[0]);
-        const lat1 = toRad(coords1[1]);
-        const lat2 = toRad(coords2[1]);
-
-        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
-    }
-
 
     function checkCitiesAndDisplayError() {
         const pickupCity = document.getElementById(pickupField + '-city').value;
@@ -80,20 +76,16 @@
         console.log("Pickup inputElementId:", pickupCity );
         console.log("Destination inputElementId:", destinationCity );
 
-        if (window.pickupCoordinates && window.destinationCoordinates) {
-            const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
-            if (distance > maxRadiusField) { // 30 mil dalam kilometer
-                errorMessage.style.display = 'block';
-                console.log("Result: True");
-                submitButton.disabled = true;
-            } else {
-                errorMessage.style.display = 'none';
-                console.log("Result: False");
-                submitButton.disabled = false;
-            }
+        if (pickupCity && destinationCity && pickupCity !== destinationCity) {
+            errorMessage.style.display = 'block';
+            console.log("Result: True");
+            submitButton.disabled = true;
+        } else {
+            errorMessage.style.display = 'none';
+            console.log("Result: False");
+            submitButton.disabled = false;
         }
     }
-
 
     $(document).ready(function() {
         $('#'+pickupField).on('input', function(e) {
