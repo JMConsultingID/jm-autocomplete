@@ -16,7 +16,7 @@
                 const places = data.features;
                 let resultsHtml = '';
                 for (let place of places) {
-                    currentContext[place.place_name] = place.context;
+                    currentContext[place.place_name] = place;
                     resultsHtml += `<div onclick="selectAddress('${place.place_name}', '${resultElement.id}')">${place.place_name}</div>`;
                 }
                 resultElement.innerHTML = resultsHtml;
@@ -28,13 +28,15 @@
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
 
     let inputElementId;
-    if (resultElementId === 'pickup-results') {
+    if (currentContext[address] && currentContext[address].geometry) {
+        if (resultElementId === 'pickup-results') {
         window.pickupCoordinates = currentContext[address].geometry.coordinates;
-    } else if (resultElementId === 'destination-results') {
-        window.destinationCoordinates = currentContext[address].geometry.coordinates;
-    } else {
-        console.error("Unknown resultElementId:", resultElementId);
-        return;
+        } else if (resultElementId === 'destination-results') {
+            window.destinationCoordinates = currentContext[address].geometry.coordinates;
+        } else {
+            console.error("Unknown resultElementId:", resultElementId);
+            return;
+        }
     }
     console.log("Determined inputElementId:", inputElementId);
 
