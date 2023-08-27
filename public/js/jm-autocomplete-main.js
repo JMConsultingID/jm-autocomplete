@@ -30,14 +30,14 @@
     });
 
     // Menempelkan Geocoder ke elemen input
-    document.getElementById(pickupField).appendChild(pickupGeocoder.onAdd());
+    const pickupElement = document.getElementById(pickupField);
     if (pickupElement) {
         pickupElement.appendChild(pickupGeocoder.onAdd());
         console.log("Appended pickupGeocoder to", pickupField);
     } else {
         console.log("Element with ID", pickupField, "not found.");
     }
-    document.getElementById(destinationField).appendChild(destinationGeocoder.onAdd());
+    const destinationElement = document.getElementById(destinationField);
      if (destinationElement) {
         destinationElement.appendChild(destinationGeocoder.onAdd());
         console.log("Appended destinationGeocoder to", destinationField);
