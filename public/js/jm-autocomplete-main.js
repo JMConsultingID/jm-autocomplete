@@ -48,19 +48,6 @@
     const context = currentContext[address];
     console.log("Context for the address:", context);
 
-    // Extract city, state, and zip from context
-    let city = '';
-    let state = '';
-    let zip = '';
-    for (let item of context) {
-        if (item.id.startsWith('place')) {
-            city = item.text;
-        } else if (item.id.startsWith('region')) {
-            state = item.text;
-        } else if (item.id.startsWith('postcode')) {
-            zip = item.text;
-        }
-    }
 
     console.log("Extracted city:", city, "state:", state, "zip:", zip);
 
