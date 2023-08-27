@@ -15,7 +15,8 @@
         types: 'address,place,postcode',
         placeholder: 'Enter an address',
         marker: false,
-        minLength: 3
+        minLength: 2,
+        input: pickupField // Tambahkan baris ini
     });
 
     // Inisialisasi MapboxGeocoder untuk Destination
@@ -26,24 +27,16 @@
         types: 'address,place,postcode',
         placeholder: 'Enter an address',
         marker: false,
-        minLength: 3
+        minLength: 3,
+        input: destinationField
     });
 
-    const pickupParentElement = document.body.appendChild(pickupGeocoder.onAdd());
-if (pickupParentElement) {
-    pickupParentElement.appendChild(pickupGeocoder.onAdd());
-    console.log("Appended pickupGeocoder to", pickupField);
-} else {
-    console.log("Parent element for ID", pickupField, "not found.");
-}
+const pickupContainer = pickupGeocoder.onAdd();
+document.getElementById(pickupField).parentNode.insertBefore(pickupContainer, document.getElementById(pickupField).nextSibling);
 
-const destinationParentElement = document.body.appendChild(destinationGeocoder.onAdd());
-if (destinationParentElement) {
-    destinationParentElement.appendChild(destinationGeocoder.onAdd());
-    console.log("Appended destinationGeocoder to", destinationField);
-} else {
-    console.log("Parent element for ID", destinationField, "not found.");
-}
+const destinationContainer = destinationGeocoder.onAdd();
+document.getElementById(destinationField).parentNode.insertBefore(destinationContainer, document.getElementById(destinationField).nextSibling);
+
 
     // Mendengarkan event 'result' dari Geocoder
     pickupGeocoder.on('result', function(e) {
