@@ -31,7 +31,19 @@
 
     // Menempelkan Geocoder ke elemen input
     document.getElementById(pickupField).appendChild(pickupGeocoder.onAdd());
+    if (pickupElement) {
+        pickupElement.appendChild(pickupGeocoder.onAdd());
+        console.log("Appended pickupGeocoder to", pickupField);
+    } else {
+        console.log("Element with ID", pickupField, "not found.");
+    }
     document.getElementById(destinationField).appendChild(destinationGeocoder.onAdd());
+     if (destinationElement) {
+        destinationElement.appendChild(destinationGeocoder.onAdd());
+        console.log("Appended destinationGeocoder to", destinationField);
+    } else {
+        console.log("Element with ID", destinationField, "not found.");
+    }
 
     // Mendengarkan event 'result' dari Geocoder
     pickupGeocoder.on('result', function(e) {
