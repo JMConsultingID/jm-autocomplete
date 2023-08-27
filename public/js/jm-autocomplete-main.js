@@ -1,61 +1,32 @@
 (function( $ ) {
     'use strict';
 
- const accessToken = jmAutocompleteData.mapboxApiKey;
+    const types = 'address,place,postcode';
+    const accessToken = jmAutocompleteData.mapboxApiKey; // Ganti dengan token akses Mapbox Anda
     let currentContext = {};
     let formID = jmAutocompleteData.formId;
     let pickupField = jmAutocompleteData.pickupField;
     let destinationField = jmAutocompleteData.destinationField;
 
-    // Inisialisasi MapboxGeocoder untuk Pickup
-    const pickupGeocoder = new MapboxGeocoder({
-        accessToken: accessToken,
-        mapboxgl: mapboxgl,
-        countries: 'us',
-        types: 'address,place,postcode',
-        marker: false,
-        minLength: 3
-    });
+    function fetchAddresses(query, resultElement) {
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${accessToken}&country=US&types=${types}`;
 
-    // Inisialisasi MapboxGeocoder untuk Destination
-    const destinationGeocoder = new MapboxGeocoder({
-        accessToken: accessToken,
-        mapboxgl: mapboxgl,
-        countries: 'us',
-        types: 'address,place,postcode',
-        marker: false,
-        minLength: 3
-    });
-
-    // Mendengarkan event 'result' dari Geocoder
-    pickupGeocoder.on('result', function(e) {
-        selectAddress(e.result.place_name, 'pickup-results');
-    });
-
-    destinationGeocoder.on('result', function(e) {
-        selectAddress(e.result.place_name, 'destination-results');
-    });
-
-    // Event listener untuk field input
-    $('#'+pickupField).on('input', function(e) {
-        if ($(this).val().length > 2) {
-            pickupGeocoder.query($(this).val());
-        }
-    });
-
-    $('#'+destinationField).on('input', function(e) {
-        if ($(this).val().length > 2) {
-            destinationGeocoder.query($(this).val());
-        }
-    });
-
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const places = data.features;
+                let resultsHtml = '';
+                for (let place of places) {
+                    currentContext[place.place_name] = place.context;
+                    resultsHtml += `<div onclick="selectAddress('${place.place_name}', '${resultElement.id}')">${place.place_name}</div>`;
+                }
+                resultElement.innerHTML = resultsHtml;
+                resultElement.style.display = 'block';
+            });
+    }
 
     window.selectAddress = function(address, resultElementId) {
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
-
-    console.log("Current Context:", currentContext); // Tambahkan ini
-    console.log("Pickup Field:", pickupField); // Tambahkan ini
-    console.log("Destination Field:", destinationField); // Tambahkan ini
 
     let inputElementId;
     if (resultElementId === 'pickup-results') {
@@ -95,7 +66,7 @@
     document.getElementById(inputElementId + '-state').value = state;
     document.getElementById(inputElementId + '-zip').value = zip;
     checkCitiesAndDisplayError();
-}
+    }
 
     function checkCitiesAndDisplayError() {
         const pickupCity = document.getElementById(pickupField + '-city').value;
@@ -116,5 +87,21 @@
             submitButton.disabled = false;
         }
     }
+
+    $(document).ready(function() {
+        $('#'+pickupField).on('input', function(e) {
+            if ($(this).val().length > 1) {
+                fetchAddresses($(this).val(), $('#pickup-results')[0]);
+            }
+        });
+
+        $('#'+destinationField).on('input', function(e) {
+            if ($(this).val().length > 1) {
+                fetchAddresses($(this).val(), $('#destination-results')[0]);
+            }
+        });
+    });
+
+
 
 })( jQuery );
