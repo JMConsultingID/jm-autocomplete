@@ -1,7 +1,7 @@
 (function( $ ) {
     'use strict';
 
-    const types = 'address,place,postcode';
+    const types = 'address';
     const accessToken = jmAutocompleteData.mapboxApiKey; // Ganti dengan token akses Mapbox Anda
     let currentContext = {};
     let formID = jmAutocompleteData.formId;
