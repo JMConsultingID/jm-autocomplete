@@ -29,9 +29,9 @@
 
     let inputElementId;
     if (resultElementId === 'pickup-results') {
-        inputElementId = pickupField;
+        window.pickupCoordinates = currentContext[address].geometry.coordinates;
     } else if (resultElementId === 'destination-results') {
-        inputElementId = destinationField;
+        window.destinationCoordinates = currentContext[address].geometry.coordinates;
     } else {
         console.error("Unknown resultElementId:", resultElementId);
         return;
@@ -67,6 +67,24 @@
     checkCitiesAndDisplayError();
     }
 
+    function haversineDistance(coords1, coords2) {
+        function toRad(value) {
+            return value * Math.PI / 180;
+        }
+
+        const R = 6371; // radius bumi dalam kilometer
+        const dLat = toRad(coords2[1] - coords1[1]);
+        const dLon = toRad(coords2[0] - coords1[0]);
+        const lat1 = toRad(coords1[1]);
+        const lat2 = toRad(coords2[1]);
+
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+
     function checkCitiesAndDisplayError() {
         const pickupCity = document.getElementById(pickupField + '-city').value;
         const destinationCity = document.getElementById(destinationField + '-city').value;
@@ -76,14 +94,14 @@
         console.log("Pickup inputElementId:", pickupCity );
         console.log("Destination inputElementId:", destinationCity );
 
-        if (pickupCity && destinationCity && pickupCity !== destinationCity) {
-            errorMessage.style.display = 'block';
-            console.log("Result: True");
-            submitButton.disabled = true;
-        } else {
-            errorMessage.style.display = 'none';
-            console.log("Result: False");
-            submitButton.disabled = false;
+        if (window.pickupCoordinates && window.destinationCoordinates) {
+            const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
+            if (distance > 48.2803) { // 30 mil dalam kilometer
+                alert("destinationField melebihi radius 30 mil");
+                submitButton.disabled = true;
+            } else {
+                submitButton.disabled = false;
+            }
         }
     }
 
