@@ -29,7 +29,7 @@
         minLength: 3
     });
 
-    const pickupParentElement = document.getElementById(pickupField).parentNode;
+    const pickupParentElement = document.body.appendChild(pickupGeocoder.onAdd());
 if (pickupParentElement) {
     pickupParentElement.appendChild(pickupGeocoder.onAdd());
     console.log("Appended pickupGeocoder to", pickupField);
@@ -37,7 +37,7 @@ if (pickupParentElement) {
     console.log("Parent element for ID", pickupField, "not found.");
 }
 
-const destinationParentElement = document.getElementById(destinationField).parentNode;
+const destinationParentElement = document.body.appendChild(destinationGeocoder.onAdd());
 if (destinationParentElement) {
     destinationParentElement.appendChild(destinationGeocoder.onAdd());
     console.log("Appended destinationGeocoder to", destinationField);
@@ -47,12 +47,17 @@ if (destinationParentElement) {
 
     // Mendengarkan event 'result' dari Geocoder
     pickupGeocoder.on('result', function(e) {
-        selectAddress('Contoh Alamat', 'pickup-results');
-    });
+    const address = e.result.place_name;
+    document.getElementById(pickupField).value = address;
+    selectAddress(address, 'pickup-results');
+});
 
-    destinationGeocoder.on('result', function(e) {
-        selectAddress('Contoh Alamat s', 'destination-results');
-    });
+destinationGeocoder.on('result', function(e) {
+    const address = e.result.place_name;
+    document.getElementById(destinationField).value = address;
+    selectAddress(address, 'destination-results');
+});
+
 
     window.selectAddress = function(address, resultElementId) {
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
