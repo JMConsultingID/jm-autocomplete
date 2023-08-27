@@ -82,13 +82,17 @@
         if (window.pickupCoordinates && window.destinationCoordinates) {
             const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
             if (distance > 48.2803) { // 30 mil dalam kilometer
-                alert("destinationField melebihi radius 30 mil");
+                errorMessage.style.display = 'block';
+                console.log("Result: True");
                 submitButton.disabled = true;
             } else {
+                errorMessage.style.display = 'none';
+                console.log("Result: False");
                 submitButton.disabled = false;
             }
         }
     }
+
 
     $(document).ready(function() {
         $('#'+pickupField).on('input', function(e) {
