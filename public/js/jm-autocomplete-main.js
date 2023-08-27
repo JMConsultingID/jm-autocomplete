@@ -1,7 +1,7 @@
 (function( $ ) {
     'use strict';
 
-    const accessToken = jmAutocompleteData.mapboxApiKey;
+ const accessToken = jmAutocompleteData.mapboxApiKey;
     let currentContext = {};
     let formID = jmAutocompleteData.formId;
     let pickupField = jmAutocompleteData.pickupField;
@@ -13,10 +13,8 @@
         mapboxgl: mapboxgl,
         countries: 'us',
         types: 'address,place,postcode',
-        placeholder: 'Enter an address',
         marker: false,
-        minLength: 2,
-        input: pickupField // Tambahkan baris ini
+        minLength: 3
     });
 
     // Inisialisasi MapboxGeocoder untuk Destination
@@ -25,31 +23,31 @@
         mapboxgl: mapboxgl,
         countries: 'us',
         types: 'address,place,postcode',
-        placeholder: 'Enter an address',
         marker: false,
-        minLength: 3,
-        input: destinationField
+        minLength: 3
     });
-
-const pickupContainer = pickupGeocoder.onAdd();
-document.getElementById(pickupField).parentNode.insertBefore(pickupContainer, document.getElementById(pickupField).nextSibling);
-
-const destinationContainer = destinationGeocoder.onAdd();
-document.getElementById(destinationField).parentNode.insertBefore(destinationContainer, document.getElementById(destinationField).nextSibling);
-
 
     // Mendengarkan event 'result' dari Geocoder
     pickupGeocoder.on('result', function(e) {
-    const address = e.result.place_name;
-    document.getElementById(pickupField).value = address;
-    selectAddress(address, 'pickup-results');
-});
+        selectAddress(e.result.place_name, 'pickup-results');
+    });
 
-destinationGeocoder.on('result', function(e) {
-    const address = e.result.place_name;
-    document.getElementById(destinationField).value = address;
-    selectAddress(address, 'destination-results');
-});
+    destinationGeocoder.on('result', function(e) {
+        selectAddress(e.result.place_name, 'destination-results');
+    });
+
+    // Event listener untuk field input
+    $('#'+pickupField).on('input', function(e) {
+        if ($(this).val().length > 2) {
+            pickupGeocoder.query($(this).val());
+        }
+    });
+
+    $('#'+destinationField).on('input', function(e) {
+        if ($(this).val().length > 2) {
+            destinationGeocoder.query($(this).val());
+        }
+    });
 
 
     window.selectAddress = function(address, resultElementId) {
