@@ -57,6 +57,10 @@
     window.selectAddress = function(address, resultElementId) {
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
 
+    console.log("Current Context:", currentContext); // Tambahkan ini
+    console.log("Pickup Field:", pickupField); // Tambahkan ini
+    console.log("Destination Field:", destinationField); // Tambahkan ini
+
     let inputElementId;
     if (resultElementId === 'pickup-results') {
         inputElementId = pickupField;
@@ -95,7 +99,7 @@
     document.getElementById(inputElementId + '-state').value = state;
     document.getElementById(inputElementId + '-zip').value = zip;
     checkCitiesAndDisplayError();
-    }
+}
 
     function checkCitiesAndDisplayError() {
         const pickupCity = document.getElementById(pickupField + '-city').value;
