@@ -49,12 +49,6 @@
     console.log("Context for the address:", context);
 
 
-    console.log("Extracted city:", city, "state:", state, "zip:", zip);
-
-    // Set values to hidden fields
-    document.getElementById(inputElementId + '-city').value = city;
-    document.getElementById(inputElementId + '-state').value = state;
-    document.getElementById(inputElementId + '-zip').value = zip;
     checkCitiesAndDisplayError();
     }
 
