@@ -1,7 +1,6 @@
 (function( $ ) {
     'use strict';
 
-    const types = 'address,place';
     const accessToken = jmAutocompleteData.mapboxApiKey; // Ganti dengan token akses Mapbox Anda
     let currentContext = {};
     let formID = jmAutocompleteData.formId;
@@ -9,7 +8,7 @@
     let destinationField = jmAutocompleteData.destinationField;
 
     function fetchAddresses(query, resultElement) {
-        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${accessToken}&country=US&types=${types}`;
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${accessToken}&type=address,place,postcode,&country=US`;
 
         fetch(url)
             .then(response => response.json())
