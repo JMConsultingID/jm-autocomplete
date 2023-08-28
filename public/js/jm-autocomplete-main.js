@@ -153,8 +153,8 @@
         const errorMessage = document.getElementById('error-message');
         const submitButton = document.getElementById('wpforms-submit-' + formID);
 
-        console.log("Pickup inputElementId:", pickupCity );
-        console.log("Destination inputElementId:", destinationCity );
+        //console.log("Pickup inputElementId:", pickupCity );
+        //console.log("Destination inputElementId:", destinationCity );
 
         // Cari elemen <em> untuk pickupField dan destinationField
         let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
@@ -178,7 +178,6 @@
             destinationErrorElement.setAttribute('role', 'alert');
             destinationErrorElement.setAttribute('aria-label', 'Error message');
             destinationErrorElement.style.display = 'none';
-            console.log("Result: ABCD");
             document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
         }
 
