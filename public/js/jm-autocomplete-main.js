@@ -124,7 +124,7 @@
     $(document).ready(function() {
         // Tambahkan tautan di samping field pickup
         $('#'+pickupField).after('<a href="#" id="select-pin-link-pickup" class="select-pin-link" data-field="pickup">Select Pin on Map for Pickup</a>');
-        $('#'+pickupField).after('<a href="#" id="select-pin-link-destination" class="select-pin-link" data-field="destination">Select Pin on Map for Destination</a>');
+        $('#'+destinationField).after('<a href="#" id="select-pin-link-destination" class="select-pin-link" data-field="destination">Select Pin on Map for Destination</a>');
 
         // Tambahkan event listener untuk tautan "select pin on map"
         $('#select-pin-link').on('click', showMapPopup);
