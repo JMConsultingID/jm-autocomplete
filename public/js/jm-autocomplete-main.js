@@ -28,7 +28,7 @@
             console.log("Either pickupCoordinates or destinationCoordinates is empty. Exiting...");
             return;
         }
-        
+
         if (map.getSource('route')) {
             map.removeLayer('route');
             map.removeSource('route');
@@ -178,6 +178,7 @@
             destinationErrorElement.setAttribute('role', 'alert');
             destinationErrorElement.setAttribute('aria-label', 'Error message');
             destinationErrorElement.style.display = 'none';
+            console.log("Result: ABCD");
             document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
         }
 
