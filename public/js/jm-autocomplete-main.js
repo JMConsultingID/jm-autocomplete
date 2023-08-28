@@ -13,6 +13,9 @@
     let mapPopup;
     let markerPopup;
 
+    let pickupCoordinates_point; // Gunakan let di sini
+    let destinationCoordinates_point; // Gunakan let di sini
+
     // Fungsi untuk melakukan reverse geocoding
     function reverseGeocode(lngLat, callback) {
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng},${lngLat.lat}.json?access_token=${accessToken}`;
@@ -75,6 +78,8 @@
             event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
             const selectedCoordinates = markerPopup.getLngLat();
             window.pickupCoordinates = [selectedCoordinates.lng, selectedCoordinates.lat];
+            pickupCoordinates_point = [selectedCoordinates.lng, selectedCoordinates.lat];
+            console.log("1p:", pickupCoordinates_point);
             const lngLat = markerPopup.getLngLat();
         
             // Panggil fungsi reverse geocoding
@@ -177,9 +182,7 @@
             });
     }
 
-    let inputElementId;
-    let pickupCoordinates_point; // Gunakan let di sini
-    let destinationCoordinates_point; // Gunakan let di sini
+    let inputElementId;    
 
     window.selectAddress = function(address, resultElementId) {
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
