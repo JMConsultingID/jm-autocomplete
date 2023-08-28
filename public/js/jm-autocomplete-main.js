@@ -108,9 +108,9 @@
         if (window.pickupCoordinates && window.destinationCoordinates) {
             const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
             if (distance > maxRadiusField) { // 30 mil dalam kilometer
-                pickupErrorElement.textContent = errorMessage;
+                pickupErrorElement.textContent = errorMessage.textContent;
                 pickupErrorElement.style.display = 'block';
-                destinationErrorElement.textContent = errorMessage;
+                destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
                 errorMessage.style.display = 'block';
                 console.log("Result: True");
