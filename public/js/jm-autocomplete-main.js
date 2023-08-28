@@ -89,8 +89,8 @@
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
 
     let inputElementId;
-    const pickupCoordinates_point;
-    const destinationCoordinates_point;
+    let pickupCoordinates_point; // Gunakan let di sini
+    let destinationCoordinates_point; // Gunakan let di sini
     if (currentContext[address] && currentContext[address].geometry) {
         if (resultElementId === 'pickup-results') {
         window.pickupCoordinates = currentContext[address].geometry.coordinates;
