@@ -40,7 +40,7 @@
         if (!mapPopup) {
             mapboxgl.accessToken = accessToken;
             mapPopup = new mapboxgl.Map({
-                container: 'mapPopup',
+                container: 'popup-map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [-96, 37.8],
                 zoom: 3
