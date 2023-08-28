@@ -349,7 +349,7 @@ function add_hidden_fields_to_wpforms($form_data) {
     <label id="error-message" style="color: red; display: none;">'.$error_message.'</label>
     <div id="map-popup" style="display:none;">
     <div id="popup-map" style="width: 400px; height: 300px;"></div>
-    <button id="done-button">Done</button>
+    <a href="#" id="done-button">Done</a>
     </div>
 
     <input type="hidden" id="'.$pickup.'-city">
