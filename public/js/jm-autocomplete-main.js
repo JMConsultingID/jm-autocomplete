@@ -127,7 +127,8 @@
         $('#'+destinationField).after('<a href="#" id="select-pin-link-destination" class="select-pin-link" data-field="destination">Select Pin on Map for Destination</a>');
 
         // Tambahkan event listener untuk tautan "select pin on map"
-        $('#select-pin-link').on('click', showMapPopup);
+        $('#select-pin-link-pickup').on('click', showMapPopup);
+        $('#select-pin-link-destination').on('click', showMapPopup);
     });
 
     // Inisialisasi Peta
