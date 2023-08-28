@@ -80,13 +80,39 @@
         console.log("Pickup inputElementId:", pickupCity );
         console.log("Destination inputElementId:", destinationCity );
 
+        // Cari elemen <em> untuk pickupField dan destinationField
+        let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
+        let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
+
+        // Jika elemen <em> tidak ada, buat elemen baru
+        if (!pickupErrorElement) {
+            pickupErrorElement = document.createElement('em');
+            pickupErrorElement.id = pickupField + '-error-radius';
+            pickupErrorElement.className = 'wpforms-error';
+            pickupErrorElement.setAttribute('role', 'alert');
+            pickupErrorElement.setAttribute('aria-label', 'Error message');
+            document.getElementById(pickupField).parentNode.appendChild(pickupErrorElement);
+        }
+
+        if (!destinationErrorElement) {
+            destinationErrorElement = document.createElement('em');
+            destinationErrorElement.id = destinationField + '-error-radius';
+            destinationErrorElement.className = 'wpforms-error';
+            destinationErrorElement.setAttribute('role', 'alert');
+            destinationErrorElement.setAttribute('aria-label', 'Error message');
+            document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
+        }
+
         if (window.pickupCoordinates && window.destinationCoordinates) {
             const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
             if (distance > maxRadiusField) { // 30 mil dalam kilometer
+                destinationErrorElement.textContent = "destinationField melebih radius 30 mil";
+                destinationErrorElement.style.display = 'block';
                 errorMessage.style.display = 'block';
                 console.log("Result: True");
                 submitButton.disabled = true;
             } else {
+                destinationErrorElement.style.display = 'none';
                 errorMessage.style.display = 'none';
                 console.log("Result: False");
                 submitButton.disabled = false;
