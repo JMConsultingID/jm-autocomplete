@@ -68,7 +68,7 @@
 
                 // Tambahkan marker yang dapat digerakkan ke peta di koordinat tengah
                 markerPopup = new mapboxgl.Marker({
-                    draggable: true
+                    draggable: false
                 })
                 .setLngLat(center)
                 .addTo(mapPopup);
@@ -113,6 +113,7 @@
             }
 
             $('#map-popup').hide();
+            checkCitiesAndDisplayError();
         }
 
         // Tambahkan event listener untuk tombol "done"
