@@ -23,6 +23,12 @@
 
      // Menambahkan Garis Arah ke Peta
     function addDirectionToMap(pickupCoordinates, destinationCoordinates) {
+        // Jika pickupCoordinates atau destinationCoordinates kosong, keluar dari fungsi
+        if (!pickupCoordinates || !destinationCoordinates) {
+            console.log("Either pickupCoordinates or destinationCoordinates is empty. Exiting...");
+            return;
+        }
+        
         if (map.getSource('route')) {
             map.removeLayer('route');
             map.removeSource('route');
