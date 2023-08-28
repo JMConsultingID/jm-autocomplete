@@ -11,6 +11,23 @@
 
     let map;
 
+    $(document).ready(function() {
+        // Membuat tombol
+        const $button = $('<button>', {
+            text: 'Select Pin on Map',
+            type: 'button', // Pastikan tipe tombol adalah 'button' agar tidak mengirimkan form saat diklik
+            id: 'select-pin-button',
+            click: showMapPopup // Fungsi yang akan dipanggil saat tombol diklik
+        });
+
+        // Menambahkan tombol setelah field pickup
+        $('#pickupField').after($button);
+    });
+
+    function showMapPopup() {
+        // Kode untuk menampilkan popup dan memungkinkan pengguna memilih lokasi di peta
+    }
+
     // Inisialisasi Peta
     function initializeMap() {
         map = new mapboxgl.Map({
