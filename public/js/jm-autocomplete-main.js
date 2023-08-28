@@ -113,7 +113,6 @@
             }
 
             $('#map-popup').hide();
-            checkCitiesAndDisplayError();
         }
 
         // Tambahkan event listener untuk tombol "done"
@@ -132,6 +131,8 @@
         $('#select-pin-link-pickup').on('click', showMapPopup);
         $('#select-pin-link-destination').on('click', showMapPopup);
     });
+
+    checkCitiesAndDisplayError();
 
     // Inisialisasi Peta
     function initializeMap() {
