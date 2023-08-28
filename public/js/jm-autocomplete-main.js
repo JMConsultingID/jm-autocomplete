@@ -182,9 +182,9 @@
 
     $(document).ready(function() {
         // Pastikan elemen 'directions-map' ada sebelum menginisialisasi peta
-        if ($('#directions-map').length) {
-            initializeMap();
-        }
+        //if ($('#directions-map').length) {
+           // initializeMap();
+        //}
 
         // Anda bisa memanggil addDirectionToMap di sini atau di tempat lain
         // berdasarkan koordinat pickup dan destinasi yang Anda dapatkan
@@ -234,7 +234,7 @@
     console.log("1p:", pickupCoordinates_point);
     console.log("2d:", destinationCoordinates_point);
 
-    addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
+    //addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
 
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
