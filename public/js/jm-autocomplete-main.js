@@ -132,8 +132,6 @@
         $('#select-pin-link-destination').on('click', showMapPopup);
     });
 
-    checkCitiesAndDisplayError();
-
     // Inisialisasi Peta
     function initializeMap() {
         map = new mapboxgl.Map({
