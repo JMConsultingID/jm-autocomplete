@@ -11,8 +11,9 @@
 
     let map;
 
-    // Fungsi untuk menampilkan popup peta
-    function showMapPopup() {
+     function showMapPopup(event) {
+        event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
+
         // Tampilkan popup
         $('#map-popup').show();
 
@@ -32,24 +33,17 @@
         // Tambahkan event listener untuk tombol "done"
         $('#done-button').on('click', function() {
             const lngLat = marker.getLngLat();
-
-            // Lakukan geocoding terbalik untuk mendapatkan alamat dari koordinat
-            fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng},${lngLat.lat}.json?access_token=${accessToken}`)
-                .then(response => response.json())
-                .then(data => {
-                    const placeName = data.features[0].place_name; // Ambil alamat dari hasil geocoding
-                    $('#'+pickupField).val(placeName); // Isi field pickup dengan alamat
-                    $('#map-popup').hide(); // Sembunyikan popup
-                });
+            $('#pickupField').val(lngLat.lat + ', ' + lngLat.lng);
+            $('#map-popup').hide();
         });
     }
 
     $(document).ready(function() {
-        // Tambahkan tombol di samping field pickup
-        $('#'+pickupField).after('<button id="select-pin-button">Select Pin on Map</button>');
+        // Tambahkan tautan di samping field pickup
+        $('#pickupField').after('<a href="#" id="select-pin-link">Select Pin on Map</a>');
 
-        // Tambahkan event listener untuk tombol "select pin on map"
-        $('#select-pin-button').on('click', showMapPopup);
+        // Tambahkan event listener untuk tautan "select pin on map"
+        $('#select-pin-link').on('click', showMapPopup);
     });
 
     // Inisialisasi Peta
