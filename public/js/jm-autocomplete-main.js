@@ -12,6 +12,7 @@
     let map;
     let mapPopup;
     let markerPopup;
+    let currentField = null;
 
     let pickupCoordinates_point; // Gunakan let di sini
     let destinationCoordinates_point; // Gunakan let di sini
