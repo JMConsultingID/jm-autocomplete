@@ -119,6 +119,7 @@
         $('#done-button').on('click', function(event) {
             event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
             handleDoneButtonClick;
+            checkCitiesAndDisplayError();
         });
     }
 
