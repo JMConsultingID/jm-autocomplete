@@ -106,6 +106,8 @@
         }
     }
     console.log("Determined inputElementId:", inputElementId);
+    console.log("1p:", pickupCoordinates_point);
+    console.log("2d:", destinationCoordinates_point);
 
     addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
 
