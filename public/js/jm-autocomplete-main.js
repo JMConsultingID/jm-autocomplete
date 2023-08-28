@@ -51,7 +51,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const placeName = data.features[0].place_name; // Ambil alamat dari hasil geocoding
-                    $('#pickupField').val(placeName); // Isi field pickup dengan alamat
+                    $('#'+pickupField).val(placeName); // Isi field pickup dengan alamat
                     $('#map-popup').hide(); // Sembunyikan popup
                 });
         });
