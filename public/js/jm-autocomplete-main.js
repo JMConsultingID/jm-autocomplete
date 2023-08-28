@@ -33,14 +33,14 @@
         // Tambahkan event listener untuk tombol "done"
         $('#done-button').on('click', function() {
             const lngLat = marker.getLngLat();
-            $('#pickupField').val(lngLat.lat + ', ' + lngLat.lng);
+            $('#'+pickupField).val(lngLat.lat + ', ' + lngLat.lng);
             $('#map-popup').hide();
         });
     }
 
     $(document).ready(function() {
         // Tambahkan tautan di samping field pickup
-        $('#pickupField').after('<a href="#" id="select-pin-link">Select Pin on Map</a>');
+        $('#'+pickupField).after('<a href="#" id="select-pin-link">Select Pin on Map</a>');
 
         // Tambahkan event listener untuk tautan "select pin on map"
         $('#select-pin-link').on('click', showMapPopup);
