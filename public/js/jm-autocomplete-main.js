@@ -78,7 +78,7 @@
         $('#map-popup').show();
 
         function handleDoneButtonClick() {
-            const selectedCoordinates = marker.getLngLat();
+            const selectedCoordinates = markerPopup.getLngLat();
 
             if (currentField === 'pickup') {
                 const selectedCoordinates = markerPopup.getLngLat();
