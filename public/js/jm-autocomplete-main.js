@@ -31,7 +31,8 @@
         }).setLngLat([-96, 37.8]).addTo(map);
 
         // Tambahkan event listener untuk tombol "done"
-        $('#done-button').on('click', function() {
+        $('#done-button').on('click', function(event) {
+            event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
             const lngLat = marker.getLngLat();
             $('#'+pickupField).val(lngLat.lat + ', ' + lngLat.lng);
             $('#map-popup').hide();
