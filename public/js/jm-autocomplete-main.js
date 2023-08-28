@@ -89,12 +89,16 @@
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
 
     let inputElementId;
+    let pickupCoordinates_point;
+    let destinationCoordinates_point;
     if (currentContext[address] && currentContext[address].geometry) {
         if (resultElementId === 'pickup-results') {
         window.pickupCoordinates = currentContext[address].geometry.coordinates;
+        pickupCoordinates_point = currentContext[address].geometry.coordinates;
         inputElementId = pickupField;
         } else if (resultElementId === 'destination-results') {
             window.destinationCoordinates = currentContext[address].geometry.coordinates;
+            destinationCoordinates_point= currentContext[address].geometry.coordinates;
             inputElementId = destinationField;
         } else {
             console.error("Unknown resultElementId:", resultElementId);
@@ -103,7 +107,7 @@
     }
     console.log("Determined inputElementId:", inputElementId);
 
-    addDirectionToMap(pickupCoordinates, destinationCoordinates);
+    addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
 
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
