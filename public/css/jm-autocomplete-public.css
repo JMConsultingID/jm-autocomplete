@@ -7,8 +7,8 @@
     font-size: 14px!important;
     line-height: 17px!important;
     margin-top: 15px!important;
-    padding: 0 0 0 21px;
-    position: relative;
+    padding: 0 0 0 21px!important;
+    position: relative!important;
 }
 
 .wpforms-error-radius:before {
@@ -17,7 +17,6 @@
     content: '';
     position: absolute;
     left: 0;
-    top: 1.5px;
     width: 16px;
     height: 14px;
     background-color: #d63637;
