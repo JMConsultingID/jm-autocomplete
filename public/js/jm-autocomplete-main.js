@@ -10,6 +10,7 @@
     let maxRadiusField = jmAutocompleteData.maxRadiusField;
 
     let map;
+    let mapPopup;
 
     // Fungsi untuk melakukan reverse geocoding
     function reverseGeocode(lngLat, callback) {
@@ -38,7 +39,7 @@
         $('#map-popup').show();
 
         // Inisialisasi peta di dalam popup
-        const map = new mapboxgl.Map({
+        const mapPopup = new mapboxgl.Map({
             container: 'popup-map',
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [-96, 37.8],
@@ -48,7 +49,7 @@
         // Tambahkan kontrol untuk menempatkan pin
         const marker = new mapboxgl.Marker({
             draggable: true
-        }).setLngLat([-96, 37.8]).addTo(map);
+        }).setLngLat([-96, 37.8]).addTo(mapPopup);
 
         // Tambahkan event listener untuk tombol "done"
         $('#done-button').on('click', function(event) {
