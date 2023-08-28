@@ -21,7 +21,7 @@
         });
 
         // Menambahkan tombol setelah field pickup
-        $('#pickupField').after($button);
+        $('#'+pickupField).after($button);
     });
 
     function showMapPopup() {
