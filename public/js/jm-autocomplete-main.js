@@ -39,6 +39,9 @@
     function showMapPopup(event) {
         event.preventDefault();
 
+        currentField = event.target.dataset.field;
+        console.error("currentField : ", currentField);
+
         if ($('#popup-map').length === 0) {
             console.error("Element with ID 'map' not found.");
             return;
@@ -73,30 +76,55 @@
 
         $('#map-popup').show();
 
+        function handleDoneButtonClick() {
+            const selectedCoordinates = marker.getLngLat();
+
+            if (currentField === 'pickup') {
+                const selectedCoordinates = markerPopup.getLngLat();
+                window.pickupCoordinates = [selectedCoordinates.lng, selectedCoordinates.lat];
+                pickupCoordinates_point = [selectedCoordinates.lng, selectedCoordinates.lat];
+                console.log("1p:", pickupCoordinates_point);
+                const lngLat = markerPopup.getLngLat();
+            
+                // Panggil fungsi reverse geocoding
+                reverseGeocode(lngLat, function(address) {
+                    if (address) {
+                        $('#'+pickupField).val(address);
+                    } else {
+                        alert("Unable to fetch address for the selected location.");
+                    }                
+                });                
+            } else if (currentField === 'destination') {
+                const selectedCoordinates = markerPopup.getLngLat();
+                window.destinationCoordinates = [selectedCoordinates.lng, selectedCoordinates.lat];
+                destinationCoordinates_point = [selectedCoordinates.lng, selectedCoordinates.lat];
+                console.log("2p:", destinationCoordinates_point);
+                const lngLat = markerPopup.getLngLat();
+            
+                // Panggil fungsi reverse geocoding
+                reverseGeocode(lngLat, function(address) {
+                    if (address) {
+                        $('#'+destinationField).val(address);
+                    } else {
+                        alert("Unable to fetch address for the selected location.");
+                    }                
+                });
+            }
+
+            $('#map-popup').hide();
+        }
+
         // Tambahkan event listener untuk tombol "done"
         $('#done-button').on('click', function(event) {
             event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
-            const selectedCoordinates = markerPopup.getLngLat();
-            window.pickupCoordinates = [selectedCoordinates.lng, selectedCoordinates.lat];
-            pickupCoordinates_point = [selectedCoordinates.lng, selectedCoordinates.lat];
-            console.log("1p:", pickupCoordinates_point);
-            const lngLat = markerPopup.getLngLat();
-        
-            // Panggil fungsi reverse geocoding
-            reverseGeocode(lngLat, function(address) {
-                if (address) {
-                    $('#'+pickupField).val(address);
-                } else {
-                    alert("Unable to fetch address for the selected location.");
-                }
-                $('#map-popup').hide();
-            });
+            handleDoneButtonClick;
         });
     }
 
     $(document).ready(function() {
         // Tambahkan tautan di samping field pickup
-        $('#'+pickupField).after('<a href="#" id="select-pin-link">Select Pin on Map</a>');
+        $('#'+pickupField).after('<a href="#" id="select-pin-link-pickup" class="select-pin-link" data-field="pickup">Select Pin on Map for Pickup</a>');
+        $('#'+pickupField).after('<a href="#" id="select-pin-link-destination" class="select-pin-link" data-field="destination">Select Pin on Map for Destination</a>');
 
         // Tambahkan event listener untuk tautan "select pin on map"
         $('#select-pin-link').on('click', showMapPopup);
