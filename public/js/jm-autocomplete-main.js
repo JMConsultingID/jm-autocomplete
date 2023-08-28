@@ -85,12 +85,14 @@
             });
     }
 
-    window.selectAddress = function(address, resultElementId) {
-    console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
-
     let inputElementId;
     let pickupCoordinates_point; // Gunakan let di sini
     let destinationCoordinates_point; // Gunakan let di sini
+
+    window.selectAddress = function(address, resultElementId) {
+    console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
+
+    
     if (currentContext[address] && currentContext[address].geometry) {
         if (resultElementId === 'pickup-results') {
         window.pickupCoordinates = currentContext[address].geometry.coordinates;
