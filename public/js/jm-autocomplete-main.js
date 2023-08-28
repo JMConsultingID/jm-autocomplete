@@ -54,7 +54,7 @@
                 draggable: true
             })
             .setLngLat([-96, 37.8])
-            .addTo(map);
+            .addTo(mapPopup);
         }
 
         $('#map-popup').show();
