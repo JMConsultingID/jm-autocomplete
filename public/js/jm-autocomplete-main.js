@@ -36,6 +36,11 @@
     function showMapPopup(event) {
         event.preventDefault();
 
+        if ($('#popup-map').length === 0) {
+            console.error("Element with ID 'map' not found.");
+            return;
+        }
+
         // Cek apakah peta sudah ada
         if (!mapPopup) {
             mapboxgl.accessToken = accessToken;
@@ -43,18 +48,24 @@
                 container: 'popup-map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [-96, 37.8],
-                zoom: 3
+                zoom: 6
             });
 
             // Tambahkan kontrol navigasi ke peta
             mapPopup.addControl(new mapboxgl.NavigationControl());
 
-            // Tambahkan marker yang dapat digerakkan ke peta
-            markerPopup = new mapboxgl.Marker({
-                draggable: true
-            })
-            .setLngLat([-96, 37.8])
-            .addTo(mapPopup);
+             // Tunggu peta selesai dimuat
+            mapPopup.on('load', function() {
+                // Ambil koordinat tengah dari peta
+                const center = mapPopup.getCenter();
+
+                // Tambahkan marker yang dapat digerakkan ke peta di koordinat tengah
+                markerPopup = new mapboxgl.Marker({
+                    draggable: true
+                })
+                .setLngLat(center)
+                .addTo(mapPopup);
+            });
         }
 
         $('#map-popup').show();
