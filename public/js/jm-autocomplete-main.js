@@ -62,7 +62,7 @@
         // Tambahkan event listener untuk tombol "done"
         $('#done-button').on('click', function(event) {
             event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
-            const lngLat = marker.getLngLat();
+            const lngLat = markerPopup.getLngLat();
         
             // Panggil fungsi reverse geocoding
             reverseGeocode(lngLat, function(address) {
