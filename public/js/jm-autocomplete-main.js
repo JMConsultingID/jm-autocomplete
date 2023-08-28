@@ -91,6 +91,7 @@
             pickupErrorElement.className = 'wpforms-error';
             pickupErrorElement.setAttribute('role', 'alert');
             pickupErrorElement.setAttribute('aria-label', 'Error message');
+            pickupErrorElement.style.display = 'none';
             document.getElementById(pickupField).parentNode.appendChild(pickupErrorElement);
         }
 
@@ -100,6 +101,7 @@
             destinationErrorElement.className = 'wpforms-error';
             destinationErrorElement.setAttribute('role', 'alert');
             destinationErrorElement.setAttribute('aria-label', 'Error message');
+            destinationErrorElement.style.display = 'none';
             document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
         }
 
@@ -114,6 +116,7 @@
                 console.log("Result: True");
                 submitButton.disabled = true;
             } else {
+                pickupErrorElement.style.display = 'none';
                 destinationErrorElement.style.display = 'none';
                 errorMessage.style.display = 'none';
                 console.log("Result: False");
