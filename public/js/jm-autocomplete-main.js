@@ -11,19 +11,6 @@
 
     let map;
 
-    $(document).ready(function() {
-        // Membuat tombol
-        const $button = $('<button>', {
-            text: 'Select Pin on Map',
-            type: 'button', // Pastikan tipe tombol adalah 'button' agar tidak mengirimkan form saat diklik
-            id: 'select-pin-button',
-            click: showMapPopup // Fungsi yang akan dipanggil saat tombol diklik
-        });
-
-        // Menambahkan tombol setelah field pickup
-        $('#'+pickupField).after($button);
-    });
-
     // Fungsi untuk menampilkan popup peta
     function showMapPopup() {
         // Tampilkan popup
@@ -59,7 +46,7 @@
 
     $(document).ready(function() {
         // Tambahkan tombol di samping field pickup
-        $('#pickupField').after('<button id="select-pin-button">Select Pin on Map</button>');
+        $('#'+pickupField).after('<button id="select-pin-button">Select Pin on Map</button>');
 
         // Tambahkan event listener untuk tombol "select pin on map"
         $('#select-pin-button').on('click', showMapPopup);
