@@ -116,10 +116,7 @@
         }
 
         // Tambahkan event listener untuk tombol "done"
-        $('#done-button').on('click', function(event) {
-            event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
-            handleDoneButtonClick;
-        });
+        $('#done-button').on('click', handleDoneButtonClick);
     }
 
     $(document).ready(function() {
