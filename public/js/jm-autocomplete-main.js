@@ -55,7 +55,7 @@
                 container: 'popup-map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [-96, 37.8],
-                zoom: 6
+                zoom: 3
             });
 
             // Tambahkan kontrol navigasi ke peta
@@ -68,7 +68,7 @@
 
                 // Tambahkan marker yang dapat digerakkan ke peta di koordinat tengah
                 markerPopup = new mapboxgl.Marker({
-                    draggable: false
+                    draggable: true
                 })
                 .setLngLat(center)
                 .addTo(mapPopup);
