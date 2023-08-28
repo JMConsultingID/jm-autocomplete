@@ -11,7 +11,27 @@
 
     let map;
 
-     function showMapPopup(event) {
+    // Fungsi untuk melakukan reverse geocoding
+    function reverseGeocode(lngLat, callback) {
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng},${lngLat.lat}.json?access_token=${accessToken}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.features && data.features.length > 0) {
+                    const address = data.features[0].place_name;
+                    callback(address);
+                } else {
+                    callback(null);
+                }
+            })
+            .catch(error => {
+                console.error("Error during reverse geocoding:", error);
+                callback(null);
+            });
+    }
+
+    function showMapPopup(event) {
         event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
 
         // Tampilkan popup
@@ -34,8 +54,16 @@
         $('#done-button').on('click', function(event) {
             event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
             const lngLat = marker.getLngLat();
-            $('#'+pickupField).val(lngLat.lat + ', ' + lngLat.lng);
-            $('#map-popup').hide();
+        
+            // Panggil fungsi reverse geocoding
+            reverseGeocode(lngLat, function(address) {
+                if (address) {
+                    $('#pickupField').val(address);
+                } else {
+                    alert("Unable to fetch address for the selected location.");
+                }
+                $('#map-popup').hide();
+            });
         });
     }
 
