@@ -10,6 +10,125 @@
     let maxRadiusField = jmAutocompleteData.maxRadiusField;
 
     let map;
+    let mapPopup;
+    let markerPopup;
+    let currentField = null;
+
+    let pickupCoordinates_point; // Gunakan let di sini
+    let destinationCoordinates_point; // Gunakan let di sini
+
+    // Fungsi untuk melakukan reverse geocoding
+    function reverseGeocode(lngLat, callback) {
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng},${lngLat.lat}.json?access_token=${accessToken}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.features && data.features.length > 0) {
+                    const address = data.features[0].place_name;
+                    callback(address);
+                } else {
+                    callback(null);
+                }
+            })
+            .catch(error => {
+                console.error("Error during reverse geocoding:", error);
+                callback(null);
+            });
+    }
+
+    function showMapPopup(event) {
+        event.preventDefault();
+
+        currentField = event.target.dataset.field;
+        console.log("currentField : ", currentField);
+
+        if ($('#popup-map').length === 0) {
+            console.error("Element with ID 'map' not found.");
+            return;
+        }
+
+        // Cek apakah peta sudah ada
+        if (!mapPopup) {
+            mapboxgl.accessToken = accessToken;
+            mapPopup = new mapboxgl.Map({
+                container: 'popup-map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [-96, 37.8],
+                zoom: 3
+            });
+
+            // Tambahkan kontrol navigasi ke peta
+            mapPopup.addControl(new mapboxgl.NavigationControl());
+
+             // Tunggu peta selesai dimuat
+            mapPopup.on('load', function() {
+                // Ambil koordinat tengah dari peta
+                const center = mapPopup.getCenter();
+
+                // Tambahkan marker yang dapat digerakkan ke peta di koordinat tengah
+                markerPopup = new mapboxgl.Marker({
+                    draggable: true
+                })
+                .setLngLat(center)
+                .addTo(mapPopup);
+            });
+        }
+
+        $('#map-popup').show();
+
+        function handleDoneButtonClick() {
+            const selectedCoordinates = markerPopup.getLngLat();
+
+            if (currentField === 'pickup') {
+                const selectedCoordinates = markerPopup.getLngLat();
+                window.pickupCoordinates = [selectedCoordinates.lng, selectedCoordinates.lat];
+                pickupCoordinates_point = [selectedCoordinates.lng, selectedCoordinates.lat];
+                console.log("1p:", pickupCoordinates_point);
+                const lngLat = markerPopup.getLngLat();
+            
+                // Panggil fungsi reverse geocoding
+                reverseGeocode(lngLat, function(address) {
+                    if (address) {
+                        $('#'+pickupField).val(address);
+                    } else {
+                        alert("Unable to fetch address for the selected location.");
+                    }                
+                });                
+            } else if (currentField === 'destination') {
+                const selectedCoordinates = markerPopup.getLngLat();
+                window.destinationCoordinates = [selectedCoordinates.lng, selectedCoordinates.lat];
+                destinationCoordinates_point = [selectedCoordinates.lng, selectedCoordinates.lat];
+                console.log("2p:", destinationCoordinates_point);
+                const lngLat = markerPopup.getLngLat();
+            
+                // Panggil fungsi reverse geocoding
+                reverseGeocode(lngLat, function(address) {
+                    if (address) {
+                        $('#'+destinationField).val(address);
+                    } else {
+                        alert("Unable to fetch address for the selected location.");
+                    }                
+                });
+            }
+
+            $('#map-popup').hide();
+            checkCitiesAndDisplayError();
+        }
+
+        // Tambahkan event listener untuk tombol "done"
+        $('#done-button').on('click', handleDoneButtonClick);
+    }
+
+    $(document).ready(function() {
+        // Tambahkan tautan di samping field pickup
+        $('#'+pickupField).after('<a href="#" id="select-pin-link-pickup" class="select-pin-link" data-field="pickup">Select Pin on Map for Pickup</a>');
+        $('#'+destinationField).after('<a href="#" id="select-pin-link-destination" class="select-pin-link" data-field="destination">Select Pin on Map for Destination</a>');
+
+        // Tambahkan event listener untuk tautan "select pin on map"
+        $('#select-pin-link-pickup').on('click', showMapPopup);
+        $('#select-pin-link-destination').on('click', showMapPopup);
+    });
 
     // Inisialisasi Peta
     function initializeMap() {
@@ -63,9 +182,9 @@
 
     $(document).ready(function() {
         // Pastikan elemen 'directions-map' ada sebelum menginisialisasi peta
-        if ($('#directions-map').length) {
-            initializeMap();
-        }
+        //if ($('#directions-map').length) {
+           // initializeMap();
+        //}
 
         // Anda bisa memanggil addDirectionToMap di sini atau di tempat lain
         // berdasarkan koordinat pickup dan destinasi yang Anda dapatkan
@@ -91,9 +210,7 @@
             });
     }
 
-    let inputElementId;
-    let pickupCoordinates_point; // Gunakan let di sini
-    let destinationCoordinates_point; // Gunakan let di sini
+    let inputElementId;    
 
     window.selectAddress = function(address, resultElementId) {
     console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
@@ -117,7 +234,7 @@
     console.log("1p:", pickupCoordinates_point);
     console.log("2d:", destinationCoordinates_point);
 
-    addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
+    //addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
 
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
