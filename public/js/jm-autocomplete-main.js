@@ -108,11 +108,8 @@
         if (window.pickupCoordinates && window.destinationCoordinates) {
             const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
             if (distance > maxRadiusField) { // 30 mil dalam kilometer
-                pickupErrorElement.textContent = errorMessage.textContent;
-                pickupErrorElement.style.display = 'none';
                 destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
-                errorMessage.style.display = 'none';
                 console.log("Result: True");
                 submitButton.disabled = true;
             } else {
