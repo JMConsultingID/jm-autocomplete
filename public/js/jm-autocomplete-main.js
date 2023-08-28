@@ -41,7 +41,7 @@
         event.preventDefault();
 
         currentField = event.target.dataset.field;
-        console.error("currentField : ", currentField);
+        console.log("currentField : ", currentField);
 
         if ($('#popup-map').length === 0) {
             console.error("Element with ID 'map' not found.");
