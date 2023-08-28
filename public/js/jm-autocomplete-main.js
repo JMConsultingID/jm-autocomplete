@@ -187,6 +187,7 @@
             if (distance > maxRadiusField) { // 30 mil dalam kilometer
                 destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
+                destinationErrorElement.style.color = '#d63637';
                 console.log("Result: True");
                 submitButton.disabled = true;
             } else {

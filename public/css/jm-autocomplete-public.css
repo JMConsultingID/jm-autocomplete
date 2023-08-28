@@ -2,3 +2,12 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+.wpforms-error-radius{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 15px;
+    color: var(--wpforms-label-error-color);
+    padding: 0 0 0 21px;
+    position: #d63637;
+}
