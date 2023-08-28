@@ -58,6 +58,22 @@
         }
 
         $('#map-popup').show();
+
+        // Tambahkan event listener untuk tombol "done"
+        $('#done-button').on('click', function(event) {
+            event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
+            const lngLat = marker.getLngLat();
+        
+            // Panggil fungsi reverse geocoding
+            reverseGeocode(lngLat, function(address) {
+                if (address) {
+                    $('#'+pickupField).val(address);
+                } else {
+                    alert("Unable to fetch address for the selected location.");
+                }
+                $('#map-popup').hide();
+            });
+        });
     }
 
     $(document).ready(function() {
