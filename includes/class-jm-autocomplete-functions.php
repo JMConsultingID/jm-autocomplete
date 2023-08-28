@@ -3,11 +3,11 @@
 // Add plugin settings page
 function jm_autocomplete_plugin_settings_page() {
     add_menu_page(
-        'Hai Plugin',                // Judul pada menu utama
+        'Hai Plugin Dashboard',                // Judul pada menu utama
         'Hai Plugin',                // Judul pada menu utama
         'manage_options',            // Capability yang dibutuhkan untuk mengakses menu
         'hai_plugin',                // Slug menu utama
-        'hai_plugin_settings_page_content', // Callback function untuk halaman konten
+        'jm_autocomplete_plugin_settings_page_content', // Callback function untuk halaman konten
         'dashicons-location-alt',    // Ikona menu (Anda dapat mengganti dengan ikon lain)
         45                           // Urutan di dalam menu
     );
@@ -17,7 +17,7 @@ function jm_autocomplete_plugin_settings_page() {
         'Auto Complete Address',      // Judul submenu
         'Auto Complete Address',      // Judul submenu
         'manage_options',            // Capability yang dibutuhkan untuk mengakses submenu
-        'jm_autocomplete_plugin', // Slug submenu
+        'hai_plugin', // Slug submenu
         'jm_autocomplete_plugin_settings_page_content' // Callback function untuk halaman konten submenu
     );
 }
