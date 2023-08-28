@@ -58,7 +58,7 @@
             // Panggil fungsi reverse geocoding
             reverseGeocode(lngLat, function(address) {
                 if (address) {
-                    $('#pickupField').val(address);
+                    $('#'+pickupField).val(address);
                 } else {
                     alert("Unable to fetch address for the selected location.");
                 }
