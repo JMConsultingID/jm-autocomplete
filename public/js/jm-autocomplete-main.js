@@ -11,6 +11,7 @@
 
     let map;
     let mapPopup;
+    let markerPopup;
 
     // Fungsi untuk melakukan reverse geocoding
     function reverseGeocode(lngLat, callback) {
@@ -33,39 +34,30 @@
     }
 
     function showMapPopup(event) {
-        event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
+        event.preventDefault();
 
-        // Tampilkan popup
-        $('#map-popup').show();
-
-        // Inisialisasi peta di dalam popup
-        const mapPopup = new mapboxgl.Map({
-            container: 'popup-map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-96, 37.8],
-            zoom: 3
-        });
-
-        // Tambahkan kontrol untuk menempatkan pin
-        const marker = new mapboxgl.Marker({
-            draggable: true
-        }).setLngLat([-96, 37.8]).addTo(mapPopup);
-
-        // Tambahkan event listener untuk tombol "done"
-        $('#done-button').on('click', function(event) {
-            event.preventDefault(); // Menghentikan tautan dari navigasi ke URL
-            const lngLat = marker.getLngLat();
-        
-            // Panggil fungsi reverse geocoding
-            reverseGeocode(lngLat, function(address) {
-                if (address) {
-                    $('#'+pickupField).val(address);
-                } else {
-                    alert("Unable to fetch address for the selected location.");
-                }
-                $('#map-popup').hide();
+        // Cek apakah peta sudah ada
+        if (!mapPopup) {
+            mapboxgl.accessToken = accessToken;
+            mapPopup = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [-96, 37.8],
+                zoom: 3
             });
-        });
+
+            // Tambahkan kontrol navigasi ke peta
+            mapPopup.addControl(new mapboxgl.NavigationControl());
+
+            // Tambahkan marker yang dapat digerakkan ke peta
+            markerPopup = new mapboxgl.Marker({
+                draggable: true
+            })
+            .setLngLat([-96, 37.8])
+            .addTo(map);
+        }
+
+        $('#map-popup').show();
     }
 
     $(document).ready(function() {
