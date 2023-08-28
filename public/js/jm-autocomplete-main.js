@@ -2,11 +2,71 @@
     'use strict';
 
     const accessToken = jmAutocompleteData.mapboxApiKey; // Ganti dengan token akses Mapbox Anda
+    mapboxgl.accessToken = accessToken;
     let currentContext = {};
     let formID = jmAutocompleteData.formId;
     let pickupField = jmAutocompleteData.pickupField;
     let destinationField = jmAutocompleteData.destinationField;
     let maxRadiusField = jmAutocompleteData.maxRadiusField;
+
+    let map;
+
+    // Inisialisasi Peta
+    function initializeMap() {
+        map = new mapboxgl.Map({
+            container: 'directions-map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-96, 37.8],
+            zoom: 3
+        });
+    }
+
+     // Menambahkan Garis Arah ke Peta
+    function addDirectionToMap(pickupCoordinates, destinationCoordinates) {
+        if (map.getSource('route')) {
+            map.removeLayer('route');
+            map.removeSource('route');
+        }
+
+        map.addSource('route', {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': [pickupCoordinates, destinationCoordinates]
+                }
+            }
+        });
+
+        map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#888',
+                'line-width': 8
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        // Pastikan elemen 'directions-map' ada sebelum menginisialisasi peta
+        if ($('#directions-map').length) {
+            initializeMap();
+        }
+
+        // Anda bisa memanggil addDirectionToMap di sini atau di tempat lain
+        // berdasarkan koordinat pickup dan destinasi yang Anda dapatkan
+        // contoh:
+        // addDirectionToMap([longitudePickup, latitudePickup], [longitudeDestination, latitudeDestination]);
+    });
+
 
     function fetchAddresses(query, resultElement) {
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${accessToken}&type=address,place,postcode,&country=US`;
@@ -42,6 +102,8 @@
         }
     }
     console.log("Determined inputElementId:", inputElementId);
+
+    addDirectionToMap(pickupCoordinates, destinationCoordinates);
 
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
