@@ -164,7 +164,7 @@
         if (!pickupErrorElement) {
             pickupErrorElement = document.createElement('em');
             pickupErrorElement.id = pickupField + '-error-radius';
-            pickupErrorElement.className = 'wpforms-error';
+            pickupErrorElement.className = 'wpforms-error-radius';
             pickupErrorElement.setAttribute('role', 'alert');
             pickupErrorElement.setAttribute('aria-label', 'Error message');
             pickupErrorElement.style.display = 'none';
@@ -174,7 +174,7 @@
         if (!destinationErrorElement) {
             destinationErrorElement = document.createElement('em');
             destinationErrorElement.id = destinationField + '-error-radius';
-            destinationErrorElement.className = 'wpforms-error';
+            destinationErrorElement.className = 'wpforms-error-radius';
             destinationErrorElement.setAttribute('role', 'alert');
             destinationErrorElement.setAttribute('aria-label', 'Error message');
             destinationErrorElement.style.display = 'none';
