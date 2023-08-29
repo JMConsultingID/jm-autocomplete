@@ -207,15 +207,6 @@
 
 
        
-        // Pusatkan peta pada garis
-        const bounds = [
-            window.pickupCoordinates,
-            window.destinationCoordinates
-        ];
-        map.fitBounds(bounds, {
-            padding: 20
-        });
-
     }
 
 
