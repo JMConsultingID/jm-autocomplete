@@ -18,7 +18,7 @@
             container: 'directions-map',
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [-96, 37.8],
-            zoom: 2
+            zoom: 4
         });
 
         map.scrollZoom.disable();
