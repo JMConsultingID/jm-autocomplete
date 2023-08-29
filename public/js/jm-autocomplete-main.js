@@ -9,7 +9,7 @@
     let destinationField = jmAutocompleteData.destinationField;
     let maxRadiusField = jmAutocompleteData.maxRadiusField;
     let maxRadiusMiles = (maxRadiusField * 0.621371).toFixed(2);
-    
+
 
     let map;
 
@@ -241,6 +241,10 @@
 
         if (map.getSource('route-and-label')) {
             map.removeSource('route-and-label');
+        }
+
+        if (map.getLayer('route-line-layer')) {
+            map.removeLayer('route-line-layer');
         }
 
          map.addSource('route-and-label', {
