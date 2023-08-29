@@ -20,6 +20,8 @@
             center: [-96, 37.8],
             zoom: 4
         });
+
+        //map.scrollZoom.disable();
     }
 
      // Menambahkan Garis Arah ke Peta
@@ -222,17 +224,16 @@
                 'line-color': '#1db7dd',
                 'line-width': 4
             }
-            });
+        });
 
-            // Pusatkan peta pada garis
-            const bounds = [
-                window.pickupCoordinates,
-                window.destinationCoordinates
-            ];
-            map.fitBounds(bounds, {
-                padding: 20
-            });
-        }
+        // Pusatkan peta pada garis
+        const bounds = [
+            window.pickupCoordinates,
+            window.destinationCoordinates
+        ];
+        map.fitBounds(bounds, {
+            padding: 20
+        });
 
     }
 
