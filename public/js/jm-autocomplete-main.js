@@ -14,6 +14,12 @@
 
     function haversineDistance(coords1, coords2) {
         console.log('Coords1:', coords1, 'Coords2:', coords2);
+
+        if (!coords1 || !coords2 || coords1.length < 2 || coords2.length < 2) {
+            console.error("Invalid coordinates provided:", coords1, coords2);
+            return;
+        }
+        
         function toRad(value) {
             return value * Math.PI / 180;
         }
@@ -24,10 +30,7 @@
         const lat1 = toRad(coords1[1]);
         const lat2 = toRad(coords2[1]);
 
-        if (!coords1 || !coords2 || coords1.length < 2 || coords2.length < 2) {
-            console.error("Invalid coordinates provided:", coords1, coords2);
-            return;
-        }
+        
 
         const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
