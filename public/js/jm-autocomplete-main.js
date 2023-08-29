@@ -186,10 +186,10 @@
         }
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
-            const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
+            const distance = (haversineDistance(window.pickupCoordinates, window.destinationCoordinates)* 0.621371).toFixed(2);
             const distanceInMiles = (distance * 0.621371).toFixed(2); // Konversi dari km ke mil
             
-            console.log("distance = "+distanceInMiles+" Max Miles = "+maxRadiusMiles);
+            console.log("distance = "+distance+"Miles || Max Miles = "+maxRadiusMiles);
             if (distance > maxRadiusMiles) { // 30 mil dalam kilometer
                 destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
