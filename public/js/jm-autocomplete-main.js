@@ -19,6 +19,8 @@
             center: [-96, 37.8],
             zoom: 2
         });
+
+        map.scrollZoom.disable();
     }
 
      // Menambahkan Garis Arah ke Peta
