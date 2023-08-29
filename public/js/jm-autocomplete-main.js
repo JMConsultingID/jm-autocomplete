@@ -8,6 +8,7 @@
     let pickupField = jmAutocompleteData.pickupField;
     let destinationField = jmAutocompleteData.destinationField;
     let maxRadiusField = jmAutocompleteData.maxRadiusField;
+    let maxRadiusMiles = maxRadiusField*0.621371;
 
     let map;
 
@@ -185,7 +186,8 @@
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
             const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
-            if (distance > maxRadiusField) { // 30 mil dalam kilometer
+            console.log("distance = "+distance+" Max Miles = "+maxRadiusMiles);
+            if (distance > maxRadiusMiles) { // 30 mil dalam kilometer
                 destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
                 destinationErrorElement.style.color = '#d63637';
