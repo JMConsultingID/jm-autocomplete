@@ -125,7 +125,7 @@
         if (window.pickupCoordinates && window.destinationCoordinates) {
             
             console.log("distance = "+distance+" DMax Miles = "+maxRadiusField);
-            if (distanceInKm > maxRadiusField) { // 30 mil dalam kilometer
+            if (distance > maxRadiusField) { // 30 mil dalam kilometer
                 destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
                 destinationErrorElement.style.color = '#d63637';
