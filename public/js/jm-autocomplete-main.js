@@ -254,9 +254,9 @@
         if (!distanceElement) {
             distanceElement = document.createElement('em');
             distanceElement.id = destinationField + '-distanceElement';
-            distanceElement.className = 'wpforms-error-radius';
+            distanceElement.className = 'wpforms-result-radius';
             distanceElement.setAttribute('role', 'alert');
-            distanceElement.setAttribute('aria-label', 'Error message');
+            distanceElement.setAttribute('aria-label', 'Result message');
             distanceElement.style.display = 'none';
             document.getElementById(destinationField).parentNode.appendChild(distanceElement);
         }
