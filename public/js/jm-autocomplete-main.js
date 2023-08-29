@@ -159,7 +159,7 @@
     console.log("1p:", pickupCoordinates_point);
     console.log("2d:", destinationCoordinates_point);
 
-    addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
+    fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
 
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
@@ -245,8 +245,29 @@
 
         console.log("Distance:", distanceInMiles, "miles");
 
-        fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
-
+        map.addLayer({
+            id: 'route',
+            type: 'line',
+            source: {
+                type: 'geojson',
+                data: {
+                    type: 'Feature',
+                    properties: {},
+                    geometry: {
+                        type: 'LineString',
+                        coordinates: [window.pickupCoordinates, window.destinationCoordinates]
+                    }
+                }
+            },
+            layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            paint: {
+                'line-color': '#1db7dd',
+                'line-width': 4
+            }
+        });
 
         // Pusatkan peta pada garis
         const bounds = [
