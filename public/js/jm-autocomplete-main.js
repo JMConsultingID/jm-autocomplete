@@ -162,8 +162,7 @@
         // Cari elemen <em> untuk pickupField dan destinationField
         let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
         let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
-        const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
-        const distanceInMiles = (distance * 0.621371).toFixed(2); // Konversi dari km ke mil
+        
 
         // Jika elemen <em> tidak ada, buat elemen baru
         if (!pickupErrorElement) {
@@ -187,6 +186,8 @@
         }
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
+            const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
+            const distanceInMiles = (distance * 0.621371).toFixed(2); // Konversi dari km ke mil
             
             console.log("distance = "+distanceInMiles+" Max Miles = "+maxRadiusMiles);
             if (distanceInMiles > maxRadiusMiles) { // 30 mil dalam kilometer
