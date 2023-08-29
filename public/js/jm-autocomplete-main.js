@@ -8,7 +8,7 @@
     let pickupField = jmAutocompleteData.pickupField;
     let destinationField = jmAutocompleteData.destinationField;
     let maxRadiusField = jmAutocompleteData.maxRadiusField;
-    let maxRadiusMiles = (maxRadiusField * 1.609344);
+    let maxRadiusKm = (maxRadiusField * 1.609344);
 
     let map;
 
@@ -74,7 +74,7 @@
             return value * Math.PI / 180;
         }
 
-        const R = 6371; // radius bumi dalam kilometer
+        const R = 3959; // radius bumi dalam kilometer
         const dLat = toRad(coords2[1] - coords1[1]);
         const dLon = toRad(coords2[0] - coords1[0]);
         const lat1 = toRad(coords1[1]);
@@ -100,7 +100,6 @@
         let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
         let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
         const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
-        const distanceInMiles = (distance * 1.609344); // Konversi dari km ke mil
 
         // Jika elemen <em> tidak ada, buat elemen baru
         if (!pickupErrorElement) {
@@ -125,8 +124,8 @@
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
             
-            console.log("distance = "+distanceInMiles+" Max Miles = "+maxRadiusMiles);
-            if (distanceInMiles > maxRadiusMiles) { // 30 mil dalam kilometer
+            console.log("distance = "+distance+" DMax Miles = "+maxRadiusField);
+            if (distanceInKm > maxRadiusField) { // 30 mil dalam kilometer
                 destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
                 destinationErrorElement.style.color = '#d63637';
@@ -141,7 +140,7 @@
             }
         }
 
-        console.log("Distance:", distanceInMiles, "miles");
+        console.log("Distance:", distance, "miles");
 
         map.addLayer({
             id: 'route',
