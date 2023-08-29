@@ -186,7 +186,7 @@
         }
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
-            const distance = (haversineDistance(window.pickupCoordinates, window.destinationCoordinates)* 0.621371).toFixed(2);
+            const distance = (haversineDistance(window.pickupCoordinates, window.destinationCoordinates)* 0.621371);
             const distanceInMiles = (distance * 0.621371).toFixed(2); // Konversi dari km ke mil
             
             console.log("distance = "+distance+"Miles || Max Miles = "+maxRadiusMiles);
