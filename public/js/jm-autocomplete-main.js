@@ -16,10 +16,10 @@
         console.log('Coords1:', coords1, 'Coords2:', coords2);
 
         if (!coords1 || !coords2 || coords1.length < 2 || coords2.length < 2) {
-            console.error("Invalid coordinates provided:", coords1, coords2);
+            console.log("Invalid coordinates provided:", coords1, coords2);
             return;
         }
-        
+
         function toRad(value) {
             return value * Math.PI / 180;
         }
