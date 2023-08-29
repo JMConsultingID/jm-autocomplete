@@ -55,99 +55,51 @@
             });
     }
 
-    let inputElementId;
-    let pickupCoordinates_point; // Gunakan let di sini
-    let destinationCoordinates_point; // Gunakan let di sini
+    function fetchRouteAndAddToMap(start, end) {
+        const directionsUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?geometries=geojson&access_token=${accessToken}`;
 
-    window.selectAddress = function(address, resultElementId) {
-    console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
+        fetch(directionsUrl)
+            .then(response => response.json())
+            .then(data => {
+                const route = data.routes[0].geometry;
 
-    
-    if (currentContext[address] && currentContext[address].geometry) {
-        if (resultElementId === 'pickup-results') {
-        window.pickupCoordinates = currentContext[address].geometry.coordinates;
-        pickupCoordinates_point = currentContext[address].geometry.coordinates;
-        inputElementId = pickupField;
-        } else if (resultElementId === 'destination-results') {
-            window.destinationCoordinates = currentContext[address].geometry.coordinates;
-            destinationCoordinates_point= currentContext[address].geometry.coordinates;
-            inputElementId = destinationField;
-        } else {
-            console.error("Unknown resultElementId:", resultElementId);
-            return;
-        }
-    }
-    console.log("Determined inputElementId:", inputElementId);
-    console.log("1p:", pickupCoordinates_point);
-    console.log("2d:", destinationCoordinates_point);
+                const geojsonData = {
+                    type: 'FeatureCollection',
+                    features: [
+                        {
+                            type: 'Feature',
+                            geometry: route
+                        }
+                    ]
+                };
 
-    addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
+                if (map.getSource('route')) {
+                    map.getSource('route').setData(geojsonData);
+                } else {
+                    map.addSource('route', {
+                        type: 'geojson',
+                        data: geojsonData
+                    });
 
-    document.getElementById(inputElementId).value = address;
-    document.getElementById(resultElementId).style.display = 'none';
-
-    const context = currentContext[address];
-    console.log("Context for the address:", context);
-
-
-    checkCitiesAndDisplayError();
-    }   
-
-
-    function checkCitiesAndDisplayError() {
-        const pickupCity = document.getElementById(pickupField + '-city').value;
-        const destinationCity = document.getElementById(destinationField + '-city').value;
-        const errorMessage = document.getElementById('error-message');
-        const submitButton = document.getElementById('wpforms-submit-' + formID);        
-
-        //console.log("Pickup inputElementId:", pickupCity );
-        //console.log("Destination inputElementId:", destinationCity );
-
-        // Cari elemen <em> untuk pickupField dan destinationField
-        let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
-        let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
-        const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
-
-        // Jika elemen <em> tidak ada, buat elemen baru
-        if (!pickupErrorElement) {
-            pickupErrorElement = document.createElement('em');
-            pickupErrorElement.id = pickupField + '-error-radius';
-            pickupErrorElement.className = 'wpforms-error-radius';
-            pickupErrorElement.setAttribute('role', 'alert');
-            pickupErrorElement.setAttribute('aria-label', 'Error message');
-            pickupErrorElement.style.display = 'none';
-            document.getElementById(pickupField).parentNode.appendChild(pickupErrorElement);
-        }
-
-        if (!destinationErrorElement) {
-            destinationErrorElement = document.createElement('em');
-            destinationErrorElement.id = destinationField + '-error-radius';
-            destinationErrorElement.className = 'wpforms-error-radius';
-            destinationErrorElement.setAttribute('role', 'alert');
-            destinationErrorElement.setAttribute('aria-label', 'Error message');
-            destinationErrorElement.style.display = 'none';
-            document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
-        }
-
-        if (window.pickupCoordinates && window.destinationCoordinates) {
-            
-            console.log("distance = "+distance+" DMax Miles = "+maxRadiusField);
-            if (distance > maxRadiusField) { // 30 mil dalam kilometer
-                destinationErrorElement.textContent = errorMessage.textContent;
-                destinationErrorElement.style.display = 'block';
-                destinationErrorElement.style.color = '#d63637';
-                console.log("Result: True");
-                submitButton.disabled = true;
-            } else {
-                pickupErrorElement.style.display = 'none';
-                destinationErrorElement.style.display = 'none';
-                errorMessage.style.display = 'none';
-                console.log("Result: False");
-                submitButton.disabled = false;
-            }
-        }
-
-        console.log("Distance:", distance, "miles");
+                    map.addLayer({
+                        id: 'route-line-layer',
+                        type: 'line',
+                        source: 'route',
+                        paint: {
+                            'line-color': '#FF5733',
+                            'line-width': 2
+                        }
+                    });
+                }
+                // Pusatkan peta pada garis
+                const bounds = [
+                    window.pickupCoordinates,
+                    window.destinationCoordinates
+                ];
+                map.fitBounds(bounds, {
+                    padding: 20
+                });
+            });
     }
 
     // Inisialisasi Peta
@@ -224,6 +176,101 @@
     });
 
 
+    let inputElementId;
+    let pickupCoordinates_point; // Gunakan let di sini
+    let destinationCoordinates_point; // Gunakan let di sini
+
+    window.selectAddress = function(address, resultElementId) {
+    console.log("Function selectAddress called with address:", address, "and resultElementId:", resultElementId);
+
+    
+    if (currentContext[address] && currentContext[address].geometry) {
+        if (resultElementId === 'pickup-results') {
+        window.pickupCoordinates = currentContext[address].geometry.coordinates;
+        pickupCoordinates_point = currentContext[address].geometry.coordinates;
+        inputElementId = pickupField;
+        } else if (resultElementId === 'destination-results') {
+            window.destinationCoordinates = currentContext[address].geometry.coordinates;
+            destinationCoordinates_point= currentContext[address].geometry.coordinates;
+            inputElementId = destinationField;
+        } else {
+            console.error("Unknown resultElementId:", resultElementId);
+            return;
+        }
+    }
+    console.log("Determined inputElementId:", inputElementId);
+    console.log("1p:", pickupCoordinates_point);
+    console.log("2d:", destinationCoordinates_point);
+
+    addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
+
+    document.getElementById(inputElementId).value = address;
+    document.getElementById(resultElementId).style.display = 'none';
+
+    const context = currentContext[address];
+    console.log("Context for the address:", context);
+
+
+    checkCitiesAndDisplayError();
+    }   
+
+
+    function checkCitiesAndDisplayError() {
+        const pickupCity = document.getElementById(pickupField + '-city').value;
+        const destinationCity = document.getElementById(destinationField + '-city').value;
+        const errorMessage = document.getElementById('error-message');
+        const submitButton = document.getElementById('wpforms-submit-' + formID);        
+
+        //console.log("Pickup inputElementId:", pickupCity );
+        //console.log("Destination inputElementId:", destinationCity );
+
+        // Cari elemen <em> untuk pickupField dan destinationField
+        let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
+        let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
+        const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
+
+        // Jika elemen <em> tidak ada, buat elemen baru
+        if (!pickupErrorElement) {
+            pickupErrorElement = document.createElement('em');
+            pickupErrorElement.id = pickupField + '-error-radius';
+            pickupErrorElement.className = 'wpforms-error-radius';
+            pickupErrorElement.setAttribute('role', 'alert');
+            pickupErrorElement.setAttribute('aria-label', 'Error message');
+            pickupErrorElement.style.display = 'none';
+            document.getElementById(pickupField).parentNode.appendChild(pickupErrorElement);
+        }
+
+        if (!destinationErrorElement) {
+            destinationErrorElement = document.createElement('em');
+            destinationErrorElement.id = destinationField + '-error-radius';
+            destinationErrorElement.className = 'wpforms-error-radius';
+            destinationErrorElement.setAttribute('role', 'alert');
+            destinationErrorElement.setAttribute('aria-label', 'Error message');
+            destinationErrorElement.style.display = 'none';
+            document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
+        }
+
+        if (window.pickupCoordinates && window.destinationCoordinates) {
+            fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
+            
+            console.log("distance = "+distance+" DMax Miles = "+maxRadiusField);
+            if (distance > maxRadiusField) { // 30 mil dalam kilometer
+                destinationErrorElement.textContent = errorMessage.textContent;
+                destinationErrorElement.style.display = 'block';
+                destinationErrorElement.style.color = '#d63637';
+                console.log("Result: True");
+                submitButton.disabled = true;
+            } else {
+                pickupErrorElement.style.display = 'none';
+                destinationErrorElement.style.display = 'none';
+                errorMessage.style.display = 'none';
+                console.log("Result: False");
+                submitButton.disabled = false;
+            }
+        }
+
+        console.log("Distance:", distance, "miles");
+    }
 
     $(document).ready(function() {
         $('#'+pickupField).on('input', function(e) {
