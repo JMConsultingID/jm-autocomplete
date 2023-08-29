@@ -202,7 +202,7 @@
     console.log("1p:", pickupCoordinates_point);
     console.log("2d:", destinationCoordinates_point);
 
-    addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
+    //addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
 
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
