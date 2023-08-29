@@ -20,8 +20,6 @@
             center: [-96, 37.8],
             zoom: 4
         });
-
-        map.scrollZoom.disable();
     }
 
      // Menambahkan Garis Arah ke Peta
@@ -58,8 +56,8 @@
                 'line-cap': 'round'
             },
             'paint': {
-                'line-color': '#888',
-                'line-width': 8
+                'line-color': '#4136d6',
+                'line-width': 2
             }
         });
     }
@@ -201,6 +199,41 @@
                 submitButton.disabled = false;
             }
         }
+
+        map.addLayer({
+            id: 'route',
+            type: 'line',
+            source: {
+                type: 'geojson',
+                data: {
+                    type: 'Feature',
+                    properties: {},
+                    geometry: {
+                        type: 'LineString',
+                        coordinates: [window.pickupCoordinates, window.destinationCoordinates]
+                    }
+                }
+            },
+            layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            paint: {
+                'line-color': '#1db7dd',
+                'line-width': 4
+            }
+            });
+
+            // Pusatkan peta pada garis
+            const bounds = [
+                window.pickupCoordinates,
+                window.destinationCoordinates
+            ];
+            map.fitBounds(bounds, {
+                padding: 20
+            });
+        }
+
     }
 
 
