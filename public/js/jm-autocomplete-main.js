@@ -86,8 +86,8 @@
                         type: 'line',
                         source: 'route',
                         paint: {
-                            'line-color': '#FF5733',
-                            'line-width': 2
+                            'line-color': '#4136d6',
+                            'line-width': 4
                         }
                     });
                 }
