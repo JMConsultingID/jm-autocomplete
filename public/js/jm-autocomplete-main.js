@@ -227,7 +227,7 @@
         // Cari elemen <em> untuk pickupField dan destinationField
         let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
         let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
-        let distanceElement = document.getElementById(destinationField + '-error-radius');
+        let distanceElement = document.getElementById(destinationField + '-distanceElement');
         const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
 
         // Jika elemen <em> tidak ada, buat elemen baru
@@ -263,7 +263,7 @@
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
             fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
-            distanceElement.textContent = "Distance : "+distance;
+            distanceElement.textContent = distance;
             distanceElement.style.display = 'block';
             distanceElement.style.color = '#101112';
             console.log("Result Distance: True");
