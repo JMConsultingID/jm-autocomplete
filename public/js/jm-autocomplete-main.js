@@ -207,30 +207,7 @@
 
         console.log("Distance:", distanceInMiles, "miles");
 
-        map.addLayer({
-            id: 'route',
-            type: 'line',
-            source: {
-                type: 'geojson',
-                data: {
-                    type: 'Feature',
-                    properties: {},
-                    geometry: {
-                        type: 'LineString',
-                        coordinates: [window.pickupCoordinates, window.destinationCoordinates]
-                    }
-                }
-            },
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-            },
-            paint: {
-                'line-color': '#1db7dd',
-                'line-width': 4
-            }
-        });
-
+       
         // Pusatkan peta pada garis
         const bounds = [
             window.pickupCoordinates,
