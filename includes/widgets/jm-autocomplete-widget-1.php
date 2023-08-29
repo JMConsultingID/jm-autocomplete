@@ -56,7 +56,6 @@ class Elementor_JmAutocomplete_Maps_Widget extends \Elementor\Widget_Base {
 		<!-- Maps Start -->
         <section class="mapbox">
             <div class="wrap">
-				<h1 class="display-3 text-white title-dark mb-3"> <?php echo $settings['title']; ?> </h1>
 				<div id="directions-map" style="width: 100%; height: 400px;"></div>
             </div> 
         </section><!--end section-->
