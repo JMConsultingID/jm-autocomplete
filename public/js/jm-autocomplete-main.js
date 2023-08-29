@@ -227,6 +227,7 @@
         // Cari elemen <em> untuk pickupField dan destinationField
         let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
         let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
+        let distanceElement = document.getElementById(destinationField + '-error-radius');
         const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
 
         // Jika elemen <em> tidak ada, buat elemen baru
@@ -250,8 +251,22 @@
             document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
         }
 
+        if (!distanceElement) {
+            distanceElement = document.createElement('em');
+            distanceElement.id = destinationField + '-distanceElement';
+            distanceElement.className = 'wpforms-error-radius';
+            distanceElement.setAttribute('role', 'alert');
+            distanceElement.setAttribute('aria-label', 'Error message');
+            distanceElement.style.display = 'none';
+            document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
+        }
+
         if (window.pickupCoordinates && window.destinationCoordinates) {
             fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
+            distanceElement.textContent = "Distance : "+distance;
+            distanceElement.style.display = 'block';
+            distanceElement.style.color = '#101112';
+            console.log("Result Distance: True");
             
             console.log("distance = "+distance+" DMax Miles = "+maxRadiusField);
             if (distance > maxRadiusField) { // 30 mil dalam kilometer
