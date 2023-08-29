@@ -8,7 +8,8 @@
     let pickupField = jmAutocompleteData.pickupField;
     let destinationField = jmAutocompleteData.destinationField;
     let maxRadiusField = jmAutocompleteData.maxRadiusField;
-    let maxRadiusMiles = maxRadiusField*0.621371;
+    let maxRadiusMiles = (maxRadiusField * 0.621371).toFixed(2);
+    
 
     let map;
 
@@ -163,6 +164,7 @@
         let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
         let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
         const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
+        const distanceInMiles = (distance * 0.621371).toFixed(2); // Konversi dari km ke mil
 
         // Jika elemen <em> tidak ada, buat elemen baru
         if (!pickupErrorElement) {
@@ -188,7 +190,7 @@
         if (window.pickupCoordinates && window.destinationCoordinates) {
             
             console.log("distance = "+distance+" Max Miles = "+maxRadiusMiles);
-            if (distance > maxRadiusMiles) { // 30 mil dalam kilometer
+            if (distanceInMiles > maxRadiusMiles) { // 30 mil dalam kilometer
                 destinationErrorElement.textContent = errorMessage.textContent;
                 destinationErrorElement.style.display = 'block';
                 destinationErrorElement.style.color = '#d63637';
@@ -203,7 +205,7 @@
             }
         }
 
-        const distanceInMiles = (distance * 0.621371).toFixed(2); // Konversi dari km ke mil
+        
         console.log("Distance:", distanceInMiles, "miles");
         const midPoint = [
             (window.pickupCoordinates[0] + window.destinationCoordinates[0]) / 2,
@@ -231,7 +233,7 @@
                         coordinates: midPoint
                     },
                     properties: {
-                        description: distanceInMiles + ' miles'
+                        description: 'distance : '+distanceInMiles + ' miles'
                     }
                 }
             ]
@@ -252,9 +254,13 @@
                 type: 'line',
                 source: 'route-and-label',
                 filter: ['==', '$type', 'LineString'],
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
                 paint: {
-                    'line-color': '#FF5733',
-                    'line-width': 2
+                    'line-color': '#4136d6',
+                    'line-width': 1
                 }
             });
         }
@@ -271,7 +277,7 @@
                     'text-anchor': 'center'
                 },
                 paint: {
-                    'text-color': '#000'
+                    'text-color': '#FF5733'
                 }
             });
         }
