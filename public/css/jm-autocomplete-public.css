@@ -2,6 +2,13 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+.wpforms-result-radius{
+    font-weight: 400;
+    font-size: 14px!important;
+    line-height: 17px!important;
+    margin-top: 15px!important;
+    position: relative!important;
+}
 .wpforms-error-radius{
     font-weight: 400;
     font-size: 14px!important;
