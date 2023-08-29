@@ -159,7 +159,7 @@
     console.log("1p:", pickupCoordinates_point);
     console.log("2d:", destinationCoordinates_point);
 
-    fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
+    //addDirectionToMap(pickupCoordinates_point, destinationCoordinates_point);
 
     document.getElementById(inputElementId).value = address;
     document.getElementById(resultElementId).style.display = 'none';
@@ -244,6 +244,8 @@
         }
 
         console.log("Distance:", distanceInMiles, "miles");
+
+        fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
 
         map.addLayer({
             id: 'route',
