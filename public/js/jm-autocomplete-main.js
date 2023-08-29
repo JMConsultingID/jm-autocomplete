@@ -64,6 +64,45 @@
         });
     }
 
+    function fetchRouteAndAddToMap(start, end) {
+    const directionsUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?geometries=geojson&access_token=${accessToken}`;
+
+    fetch(directionsUrl)
+        .then(response => response.json())
+        .then(data => {
+            const route = data.routes[0].geometry;
+
+            const geojsonData = {
+                type: 'FeatureCollection',
+                features: [
+                    {
+                        type: 'Feature',
+                        geometry: route
+                    }
+                ]
+            };
+
+            if (map.getSource('route')) {
+                map.getSource('route').setData(geojsonData);
+            } else {
+                map.addSource('route', {
+                    type: 'geojson',
+                    data: geojsonData
+                });
+
+                map.addLayer({
+                    id: 'route-line-layer',
+                    type: 'line',
+                    source: 'route',
+                    paint: {
+                        'line-color': '#FF5733',
+                        'line-width': 2
+                    }
+                });
+            }
+        });
+    }
+
     $(document).ready(function() {
         // Pastikan elemen 'directions-map' ada sebelum menginisialisasi peta
         if ($('#directions-map').length) {
@@ -206,29 +245,8 @@
 
         console.log("Distance:", distanceInMiles, "miles");
 
-        map.addLayer({
-            id: 'route',
-            type: 'line',
-            source: {
-                type: 'geojson',
-                data: {
-                    type: 'Feature',
-                    properties: {},
-                    geometry: {
-                        type: 'LineString',
-                        coordinates: [window.pickupCoordinates, window.destinationCoordinates]
-                    }
-                }
-            },
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-            },
-            paint: {
-                'line-color': '#1db7dd',
-                'line-width': 4
-            }
-        });
+        fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
+
 
         // Pusatkan peta pada garis
         const bounds = [
