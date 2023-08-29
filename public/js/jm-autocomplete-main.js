@@ -13,6 +13,7 @@
     let map;
 
     function haversineDistance(coords1, coords2) {
+        console.log('Coords1:', coords1, 'Coords2:', coords2);
         function toRad(value) {
             return value * Math.PI / 180;
         }
@@ -94,8 +95,7 @@
         const pickupCity = document.getElementById(pickupField + '-city').value;
         const destinationCity = document.getElementById(destinationField + '-city').value;
         const errorMessage = document.getElementById('error-message');
-        const submitButton = document.getElementById('wpforms-submit-' + formID);
-        console.log('Coords1:', coords1, 'Coords2:', coords2);
+        const submitButton = document.getElementById('wpforms-submit-' + formID);        
 
         //console.log("Pickup inputElementId:", pickupCity );
         //console.log("Destination inputElementId:", destinationCity );
