@@ -90,6 +90,7 @@
         const destinationCity = document.getElementById(destinationField + '-city').value;
         const errorMessage = document.getElementById('error-message');
         const submitButton = document.getElementById('wpforms-submit-' + formID);
+        console.log('Coords1:', coords1, 'Coords2:', coords2);
 
         //console.log("Pickup inputElementId:", pickupCity );
         //console.log("Destination inputElementId:", destinationCity );
