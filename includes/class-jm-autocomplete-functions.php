@@ -346,8 +346,7 @@ function add_hidden_fields_to_wpforms($form_data) {
  
     // Add the hidden fields
     echo '
-    <label id="error-message" style="color: red; display: none;">'.$error_message.'</label>
-    <div id="directions-map" style="width: 100%; height: 400px;"></div>
+    <label id="error-message" style="color: red; display: none;">'.$error_message.'</label>    
     <input type="hidden" id="'.$pickup.'-city">
     <input type="hidden" id="'.$pickup.'-state">
     <input type="hidden" id="'.$pickup.'-zip">
