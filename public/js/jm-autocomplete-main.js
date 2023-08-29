@@ -205,7 +205,6 @@
             }
         }
 
-        console.log("Distance:", distanceInMiles, "miles");
 
        
         // Pusatkan peta pada garis
