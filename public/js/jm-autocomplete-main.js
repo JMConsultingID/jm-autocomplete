@@ -263,7 +263,7 @@
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
             fetchRouteAndAddToMap(window.pickupCoordinates, window.destinationCoordinates);
-            distanceElement.textContent = distance;
+            distanceElement.textContent = "Distance : " + distance.toFixed(2) + " Miles";
             distanceElement.style.display = 'block';
             distanceElement.style.color = '#101112';
             console.log("Result Distance: True");
