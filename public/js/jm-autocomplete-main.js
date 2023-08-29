@@ -258,7 +258,7 @@
             distanceElement.setAttribute('role', 'alert');
             distanceElement.setAttribute('aria-label', 'Error message');
             distanceElement.style.display = 'none';
-            document.getElementById(destinationField).parentNode.appendChild(destinationErrorElement);
+            document.getElementById(destinationField).parentNode.appendChild(distanceElement);
         }
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
