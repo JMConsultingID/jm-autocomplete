@@ -162,6 +162,7 @@
         // Cari elemen <em> untuk pickupField dan destinationField
         let pickupErrorElement = document.getElementById(pickupField + '-error-radius');
         let destinationErrorElement = document.getElementById(destinationField + '-error-radius');
+        const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
 
         // Jika elemen <em> tidak ada, buat elemen baru
         if (!pickupErrorElement) {
@@ -185,7 +186,7 @@
         }
 
         if (window.pickupCoordinates && window.destinationCoordinates) {
-            const distance = haversineDistance(window.pickupCoordinates, window.destinationCoordinates);
+            
             console.log("distance = "+distance+" Max Miles = "+maxRadiusMiles);
             if (distance > maxRadiusMiles) { // 30 mil dalam kilometer
                 destinationErrorElement.textContent = errorMessage.textContent;
@@ -202,29 +203,78 @@
             }
         }
 
-        map.addLayer({
-            id: 'route',
-            type: 'line',
-            source: {
-                type: 'geojson',
-                data: {
+        const distanceInMiles = (distance * 0.621371).toFixed(2); // Konversi dari km ke mil
+        console.log("Distance:", distanceInMiles, "miles");
+        const midPoint = [
+            (window.pickupCoordinates[0] + window.destinationCoordinates[0]) / 2,
+            (window.pickupCoordinates[1] + window.destinationCoordinates[1]) / 2
+        ];
+
+        if (map.getSource('distance-label')) {
+            map.removeSource('distance-label');
+        }
+
+        const geojsonData = {
+            type: 'FeatureCollection',
+            features: [
+                {
                     type: 'Feature',
-                    properties: {},
                     geometry: {
                         type: 'LineString',
                         coordinates: [window.pickupCoordinates, window.destinationCoordinates]
                     }
+                },
+                {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: midPoint
+                    },
+                    properties: {
+                        description: distanceInMiles + ' miles'
+                    }
                 }
-            },
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-            },
-            paint: {
-                'line-color': '#1db7dd',
-                'line-width': 4
-            }
+            ]
+        };
+
+        if (map.getSource('route-and-label')) {
+            map.removeSource('route-and-label');
+        }
+
+         map.addSource('route-and-label', {
+            type: 'geojson',
+            data: geojsonData
         });
+
+        if (!map.getLayer('route-line-layer')) {
+            map.addLayer({
+                id: 'route-line-layer',
+                type: 'line',
+                source: 'route-and-label',
+                filter: ['==', '$type', 'LineString'],
+                paint: {
+                    'line-color': '#FF5733',
+                    'line-width': 2
+                }
+            });
+        }
+
+        if (!map.getLayer('route-label-layer')) {
+            map.addLayer({
+                id: 'route-label-layer',
+                type: 'symbol',
+                source: 'route-and-label',
+                filter: ['==', '$type', 'Point'],
+                layout: {
+                    'text-field': '{description}',
+                    'text-size': 14,
+                    'text-anchor': 'center'
+                },
+                paint: {
+                    'text-color': '#000'
+                }
+            });
+        }
 
         // Pusatkan peta pada garis
         const bounds = [
